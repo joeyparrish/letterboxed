@@ -1,19 +1,57 @@
 import { createContext, useState, useContext } from 'react';
 
-const baseGame = {
-  currentGuess: "", // current guess
-  existingWords: [], // list of existing words
-  error: "", // error state
-  intent: "", // last intended user action
-  letters: [
-    ["Y", "N", "E"], // top
-    ["M", "I", "J"], // left
-    ["A", "U", "O"], // right
-    ["R", "S", "P"]  // bottom
-  ],
+const letters = [
+  ["Y", "N", "E"], // top
+  ["M", "I", "J"], // left
+  ["A", "U", "O"], // right
+  ["R", "S", "P"]  // bottom
+];
 
-  __debug: localStorage.getItem("__debug") // debug mode
+const circleCoordinates = [
+  [175, 100],
+  [300, 100],
+  [425, 100],
+  
+  [100, 175],
+  [100, 300],
+  [100, 425],
+
+  [500, 175],
+  [500, 300],
+  [500, 425],
+
+  [175, 500],
+  [300, 500],
+  [425, 500]
+];
+
+const baseGame = {
+  // current guess
+  currentGuess: "",
+  // list of existing words
+  existingWords: [],
+  // error state
+  error: "",
+  // last intended user action
+  intent: "",
+  // list of letters
+  letters,
+  // generated location map of the letters
+  letterMap: generateMap(letters),
+
+  // debug mode
+  __debug: false
 };
+
+function generateMap(letters) {
+  const map = {};
+  letters.forEach((row, i) => {
+    row.forEach((letter, j) => {
+      map[letter] = circleCoordinates[i * 3 +  j];
+    });
+  });
+  return map;
+}
 
 const Game = createContext(baseGame);
 export const useGame = () => useContext(Game);
@@ -34,9 +72,6 @@ function checkForErrors(change, state) {
       return "Guess must be 3 letters or more"
     }
     // also check if word is valid
-  }
-  if(change.intent === "debug") {
-    localStorage.setItem("__debug", change.__debug)
   }
 
   return false

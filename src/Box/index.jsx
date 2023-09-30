@@ -18,6 +18,6 @@ export default function Box() {
       <Paths />
       <Letters />
       <Circles />
-      </svg>
+    </svg>
   )
 }
