@@ -1,5 +1,21 @@
 import { useGame } from '../context';
 
+function Guesses() {
+  const [ state ] = useGame();
+  const { existingWords } = state;
+
+  return (
+    <div>
+      <p>
+        {existingWords.length} word(s)
+      </p>
+      <p>
+        {existingWords.join(" - ")}
+      </p>
+    </div>
+  )
+}
+
 export default function Input() {
   const [ state, setState ] = useGame();
   const { currentGuess, existingWords, __debug } = state;
@@ -44,6 +60,7 @@ export default function Input() {
     <div>
       <input type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
       <hr />
+      <Guesses />
       <p>Try to solve in 5 words</p>
     </div>
   )
