@@ -1,6 +1,7 @@
-import reference from '../assets/reference.svg'
+import reference from '../assets/reference.svg';
+import { useGame } from '../context';
 
-export function Box2() {
+export default function Box() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,9 +20,7 @@ export function Box2() {
   )
 }
 
-console.log(reference)
-
-export default function Box() {
+export function Box2() {
   return (
     <img src={reference} alt="reference Image" />
   )

@@ -6,7 +6,8 @@ const baseGame = {
   currentGuess: "", // current guess
   existingWords: [], // list of existing words
   error: "", // error state
-  intent: "" // last intended user action
+  intent: "", // last intended user action
+  __debug: localStorage.getItem("__debug") // debug mode
 };
 
 const Game = createContext(baseGame);
@@ -29,6 +30,9 @@ function checkForErrors(change, state) {
     }
     // also check if word is valid
   }
+  if(change.intent === "debug") {
+    localStorage.setItem("__debug", change.__debug)
+  }
 
   return false
 }
@@ -48,6 +52,13 @@ export function GameProvider({ children }: React.PropsWithChildren) {
   return (
     <Game.Provider value={[state, setState]}>
       {children}
+      {
+        state.__debug && (
+          <pre>
+            {JSON.stringify(state, null, 2)}
+          </pre>
+        )
+      }
     </Game.Provider>
   );
 }

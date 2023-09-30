@@ -2,14 +2,12 @@ import { useGame } from '../context';
 
 export default function Input() {
   const [ state, setState ] = useGame();
-
-  const { currentGuess, existingWords } = state;
-
+  const { currentGuess, existingWords, __debug } = state;
 
   function onChange(e) {
     // if we are adding a letter
-    setState({
-      currentGuess: e.target.value,
+    return setState({
+      currentGuess: e.target.value.toUpperCase(),
       intent: "guess"
     });
   }
@@ -17,7 +15,7 @@ export default function Input() {
   function keyDown(e) {
     // if we are adding a new guess
     if(e.key == "Enter") {
-      setState({
+      return setState({
         existingWords: [...existingWords, currentGuess],
         currentGuess: currentGuess.substring(currentGuess.length - 1, currentGuess.length),
         intent: "submit"
@@ -27,12 +25,18 @@ export default function Input() {
     // if we are rewinding from a current guess to a previous guess
     if(e.key === "Backspace" && currentGuess.length === 1 && state.existingWords.length > 0) {
       const previousWord = existingWords.pop();
-      setState({
+      return setState({
         currentGuess: previousWord + currentGuess,
         existingWords,
         intent: "rewind"
       });
-      return;
+    }
+
+    if(e.key === ".") {
+      return setState({
+        __debug: !__debug,
+        intent: "debug"
+      });
     }
   }
 
@@ -41,9 +45,6 @@ export default function Input() {
       <input type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
       <hr />
       <p>Try to solve in 5 words</p>
-      <pre>
-        {JSON.stringify(state, null, 2)}
-      </pre>
     </div>
   )
 }
