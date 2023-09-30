@@ -1,12 +1,17 @@
 import { createContext, useState, useContext } from 'react';
 
-export const backgroundColor = "#faa6a4";
-
 const baseGame = {
   currentGuess: "", // current guess
   existingWords: [], // list of existing words
   error: "", // error state
   intent: "", // last intended user action
+  letters: [
+    ["Y", "N", "E"], // top
+    ["M", "I", "J"], // left
+    ["A", "U", "O"], // right
+    ["R", "S", "P"]  // bottom
+  ],
+
   __debug: localStorage.getItem("__debug") // debug mode
 };
 
@@ -37,10 +42,10 @@ function checkForErrors(change, state) {
   return false
 }
 
-export function GameProvider({ children }: React.PropsWithChildren) {
+export function GameProvider({ children }) {
   const [state, set] = useState(baseGame);
 
-  function setState(change: Partial<GameState>) {
+  function setState(change) {
     const error = checkForErrors(change, state);
     if(error) {
       set({ ...state, error })

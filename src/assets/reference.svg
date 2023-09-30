@@ -1,8 +1,5 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  aria-hidden="true"
-  role="img"
   viewBox="0 0 600 600">
   <rect x="0" y= "0" width="600" height="600" fill="#faa6a4" />
   <style>
@@ -128,5 +125,4 @@
     <!-- Active (middle) Circle -->
     <text x="425" y="565" class="active">P</text>
     <circle cx="425" cy="500" r="12" class="active"/>
-
 </svg>
