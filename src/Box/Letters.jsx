@@ -2,16 +2,36 @@ import { useGame } from '../context';
 
 const offset = 125;
 
-export default function Set({ letters, placement}) {
+function Letter({ letter, x, y }) {
+  const [ state, setState ] = useGame();
+  const { currentGuess } = state;
+
+  function addLetter() {
+    setState({
+      currentGuess: currentGuess + letter,
+      intent: "guess"
+    });
+  }
+
+  return (
+    <text
+      onClick={addLetter}
+      x={x}
+      y={y}
+      className="">
+      {letter}
+    </text>
+  )
+}
+
+function Set({ letters, placement}) {
   if(placement === "top") {
     return letters.map((letter, i) => (
-        <text
+        <Letter
           key={i}
           x={300 + (offset * (i - 1))}
           y={75}
-          className="">
-          {letter}
-        </text>
+          letter={letter} />
       )
     )
   }
@@ -20,13 +40,11 @@ export default function Set({ letters, placement}) {
     return (
       <g>
         {letters.map((letter, i) => (
-          <text
+          <Letter
             key={i}
             x={60}
             y={320 + (offset * (i - 1))}
-            className="">
-            {letter}
-          </text>
+            letter={letter} />
         ))}
       </g>
     )
@@ -36,13 +54,11 @@ export default function Set({ letters, placement}) {
     return (
       <g>
         {letters.map((letter, i) => (
-        <text
+        <Letter
           key={i}
           x={540}
           y={320 + (offset * (i - 1))}
-          className="">
-          {letter}
-        </text>
+          letter={letter} />
         ))}
       </g>
     )
@@ -52,13 +68,11 @@ export default function Set({ letters, placement}) {
     return (
       <g>
         {letters.map((letter, i) => (
-          <text
+          <Letter
             key={i}
             x={300 + (offset * (i - 1))}
             y={565}
-            className="">
-            {letter}
-          </text>
+            letter={letter} />
         ))}
       </g>
     )

@@ -18,14 +18,22 @@ function deriveClass(letter, state) {
 }
 
 function Circle({ letter }) {
-  const [ state ] = useGame();
-  const { letterMap } = state;
+  const [ state, setState ] = useGame();
+  const { letterMap, currentGuess } = state;
 
   const [ x, y ] = letterMap[letter];
   const className = deriveClass(letter, state);
 
+  function addLetter() {
+    setState({
+      currentGuess: currentGuess + letter,
+      intent: "guess"
+    });
+  }
+
   return (
     <circle
+      onClick={addLetter}
       cx={x}
       cy={y}
       r={12}
