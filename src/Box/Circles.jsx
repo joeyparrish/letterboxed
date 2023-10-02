@@ -1,7 +1,20 @@
 import { useGame } from '../context';
 
-function deriveClass(letter) {
-  return ""
+function deriveClass(letter, state) {
+  // if the letter is the first letter of the current guess, this is a lead circle
+  if(state.currentGuess[0] === letter) {
+    return "lead";
+  }
+
+  // if the letter is in the current guess, this is an active circle
+  if(state.currentGuess.includes(letter)) {
+    return "active";
+  }
+
+  // if the letter is in a past guess, this is a past circle
+  if(state.existingWords.some(word => word.includes(letter))) {
+    return "past";
+  }
 }
 
 function Circle({ letter }) {
@@ -9,7 +22,7 @@ function Circle({ letter }) {
   const { letterMap } = state;
 
   const [ x, y ] = letterMap[letter];
-  const className = deriveClass(letter);
+  const className = deriveClass(letter, state);
 
   return (
     <circle
