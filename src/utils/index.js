@@ -34,3 +34,23 @@ export async function loadWords() {
 
   return dictionary;
 }
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// this is done at the top level because we're not ever going to change the dictionary
+
+// No Q because that's annoying
+const consonants = 'BCDFGHJKLMNPRSTVWXYZ';
+const vowels = 'AEIOU';
+const randomConsonants = shuffle(consonants.split(""));
+const randomVowels = shuffle(vowels.split(""));
+let _letters = [];
+for(let i = 0; i < 4; i ++) {
+  const row = randomConsonants.slice(4 * i, 4 * i + 2);
+  row.push(randomVowels[i]);
+  _letters.push(row);
+}
+
+export const letters = _letters;

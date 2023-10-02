@@ -1,12 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { loadWords } from './utils';
-
-const letters = [
-  ["Y", "N", "E"], // top
-  ["M", "I", "J"], // left
-  ["A", "U", "O"], // right
-  ["R", "S", "P"]  // bottom
-];
+import { loadWords, letters } from './utils';
 
 const circleCoordinates = [
   [175, 100],
@@ -45,9 +38,9 @@ const baseGame = {
   loading: true
 };
 
-function generateMap(letters) {
+function generateMap(letterList) {
   const map = {};
-  letters.forEach((row, i) => {
+  letterList.forEach((row, i) => {
     row.forEach((letter, j) => {
       // store the coordinates and group in which the letter is located
       map[letter] = [...circleCoordinates[i * 3 +  j], i];
