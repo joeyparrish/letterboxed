@@ -6,13 +6,11 @@ import { GameProvider } from './context';
 function App() {
 	return (
 		<GameProvider>
-			<div className="app">
-				<div className="row">
-					<Input />
-				</div>
-				<div className="row">
-					<Box />
-				</div>
+			<div className="row">
+				<Input />
+			</div>
+			<div className="row">
+				<Box />
 			</div>
 		</GameProvider>
 	);

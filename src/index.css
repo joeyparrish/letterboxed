@@ -26,10 +26,21 @@ text {
   text-anchor: middle;
 }
 
+p {
+  font-size: 24px;
+  text-align: center;
+}
+
 .row {
   display: flex;
-  width: 50%;
+  width: 100%;
+  text-align: center;
 }
+
+svg {
+  margin: auto;
+}
+
 path, circle, rect {
   stroke-width: 5px;
   stroke: black;
@@ -80,4 +91,14 @@ input {
   font-size: 60px;
   outline: none;
   width: 100%;
+  text-align: center;
+}
+
+button {
+  font-size: 24px;
+  background-color: var(--background-color);
+  border: 2px solid black;
+  border-radius: 0.3em;
+  width: 6rem;
+  height: 2rem;
 }

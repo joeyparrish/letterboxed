@@ -7,9 +7,6 @@ function Guesses() {
   return (
     <div>
       <p>
-        {existingWords.length} word(s)
-      </p>
-      <p>
         {existingWords.join(" - ")}
       </p>
     </div>
@@ -63,9 +60,8 @@ export default function Input() {
   return (
     <div>
       <input type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
-      <hr />
+      <button onClick={() => keyDown({ key: 'Enter'})}>Submit</button>
       <Guesses />
-      <p>Try to solve in 5 words</p>
     </div>
   )
 }

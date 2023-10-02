@@ -65,7 +65,7 @@ function checkForErrors(change, state) {
       .currentGuess
       .substring(change.currentGuess.length - 1, change.currentGuess.length);
 
-    if(change.currentGuess.length > 1 && !state.letterMap[lastLetter]) {
+    if(!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
       // this letter doesn't exist
       return "No such letter";
     }
