@@ -1,17 +1,26 @@
 import { useGame } from '../context';
+import { fancyJoin } from '../utils'
+
+function WhiteSpan() {
+  return <span className="join"> - </span>;
+}
 
 function Guesses() {
   const [ state ] = useGame();
-  const { existingWords } = state;
+  const { existingWords, error } = state;
 
   const content = existingWords.length > 0 ?
-    existingWords.join(" - ") :
-    "Try to create some words!";
+    fancyJoin(existingWords, <WhiteSpan/>) : <br />;
+
+  const errorString = error ? error : <br />;
 
   return (
     <div>
       <p>
         { content }
+      </p>
+      <p className='error'>
+        { errorString }
       </p>
     </div>
   )

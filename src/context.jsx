@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import { loadWords } from './utils';
 
 const letters = [
   ["Y", "N", "E"], // top
@@ -40,7 +41,8 @@ const baseGame = {
   letterMap: generateMap(letters),
 
   // debug mode
-  __debug: false
+  __debug: false,
+  loading: true
 };
 
 function generateMap(letters) {
@@ -60,7 +62,7 @@ export const useGame = () => useContext(Game);
 function checkForErrors(change, state) {
   if(change.intent === "guess") {
     if(!/^[a-zA-Z]+$/.test(change.currentGuess) && change.currentGuess !== "") {
-      return "Guesses must be letters only";
+      return "guesses must be letters only";
     }
     const lastLetter = change
       .currentGuess
@@ -68,7 +70,7 @@ function checkForErrors(change, state) {
 
     // this letter doesn't exist
     if(!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
-      return "No such letter";
+      return "no such letter on the board";
     }
 
     // Typing or removing the first letter of the game cannot
@@ -85,7 +87,7 @@ function checkForErrors(change, state) {
     const [,, group1] = state.letterMap[secondToLastLetter];
     const [,, group2] = state.letterMap[lastLetter];
     if(group1 == group2) {
-      return "Letters must be on different sides";
+      return "letters must be on different sides";
     }
   }
   if(change.intent === "rewind") {
@@ -93,9 +95,11 @@ function checkForErrors(change, state) {
   }
   if(change.intent === "submit") {
     if(state.currentGuess.length < 3) {
-      return "Guess must be 3 letters or more"
+      return "guess must be 3 letters or more";
     }
-    // also check if word is valid
+    if(!state.dictionary.has(state.currentGuess)) {
+      return `${state.currentGuess} is not a recognized word`;
+    }
   }
 
   return false
@@ -103,6 +107,7 @@ function checkForErrors(change, state) {
 
 export function GameProvider({ children }) {
   const [state, set] = useState(baseGame);
+  const { loading } = state;
 
   function setState(change) {
     const error = checkForErrors(change, state);
@@ -113,7 +118,22 @@ export function GameProvider({ children }) {
     }
   }
 
-  return (
+  const loadDictionary = async () => {
+    const dictionary = await loadWords()
+
+    setState({
+      dictionary,
+      loading: false
+    })
+  }
+
+  useEffect(() => {
+    if(loading) {
+      loadDictionary();
+    }
+  })
+
+  return !loading ? (
     <Game.Provider value={[state, setState]}>
       {children}
       {
@@ -124,5 +144,5 @@ export function GameProvider({ children }) {
         )
       }
     </Game.Provider>
-  );
+  ) : "loading...";
 }
