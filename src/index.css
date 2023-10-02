@@ -63,7 +63,7 @@ circle {
 }
 
 circle.past {
-  fill: var(--past-color);
+  fill: var(--background-color);
 }
 
 circle.lead {

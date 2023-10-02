@@ -2,7 +2,10 @@ import { useGame } from '../context';
 
 function deriveClass(letter, state) {
   // if the letter is the first letter of the current guess, this is a lead circle
-  if(state.currentGuess[0] === letter) {
+  const lastLetter = state
+    .currentGuess
+    .substring(state.currentGuess.length - 1, state.currentGuess.length);
+  if(lastLetter === letter) {
     return "lead";
   }
 

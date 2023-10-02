@@ -47,7 +47,8 @@ function generateMap(letters) {
   const map = {};
   letters.forEach((row, i) => {
     row.forEach((letter, j) => {
-      map[letter] = circleCoordinates[i * 3 +  j];
+      // store the coordinates and group in which the letter is located
+      map[letter] = [...circleCoordinates[i * 3 +  j], i];
     });
   });
   return map;
@@ -65,12 +66,27 @@ function checkForErrors(change, state) {
       .currentGuess
       .substring(change.currentGuess.length - 1, change.currentGuess.length);
 
+    // this letter doesn't exist
     if(!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
-      // this letter doesn't exist
       return "No such letter";
     }
-    // we also need to check if the letters are on the right side,
-    // which is basically the whole schtick of the game
+
+    // Typing or removing the first letter of the game cannot
+    // produce an invalid path
+    if(change.currentGuess.length <= 1) {
+      return false;
+    }
+
+    const secondToLastLetter = change
+      .currentGuess
+      .substring(change.currentGuess.length - 2, change.currentGuess.length - 1);
+
+    console.debug('checking path from ', secondToLastLetter, 'to', lastLetter);
+    const [,, group1] = state.letterMap[secondToLastLetter];
+    const [,, group2] = state.letterMap[lastLetter];
+    if(group1 == group2) {
+      return "Letters must be on different sides";
+    }
   }
   if(change.intent === "rewind") {
     // maybe there's something to check here?

@@ -64,10 +64,11 @@ function createKeyDown(state, setState) {
 
     // simulating the backspace key via the delete button
     if(e.key === "__delete") {
+      // there's nothing to delete at the beginning of the game
       if(currentGuess.length === 0) {
         return;
       }
-      // simulate the rewind event
+      // manually do the rewind event
       if(currentGuess.length == 1 && state.existingWords.length > 0) {
         const previousWord = existingWords.pop();
         return setState({
