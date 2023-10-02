@@ -22,15 +22,29 @@ export default function Input() {
 
   function onChange(e) {
     // if we are adding a letter
+    const value = e.target.value.toUpperCase();
+    const lastLetter = value[value.length - 1];
+    const updatedLetterMap = {
+      [lastLetter]: {
+        ...state.letterMap[lastLetter],
+        className: "lead"
+      }
+    }
+
     return setState({
-      currentGuess: e.target.value.toUpperCase(),
-      intent: "guess"
+      currentGuess: value,
+      intent: "guess",
+      letterMap: {
+        ...state.letterMap,
+        ...updatedLetterMap
+      }
     });
   }
 
   function keyDown(e) {
     // if we are adding a new guess
     if(e.key == "Enter") {
+
       return setState({
         existingWords: [...existingWords, currentGuess],
         currentGuess: currentGuess.substring(currentGuess.length - 1, currentGuess.length),

@@ -5,7 +5,7 @@ function Circle({ letter }) {
   const { letterMap } = state;
 
   const [ x, y ] = letterMap[letter].coords;
-  const className = letterMap[letter].state;
+  const className = letterMap[letter].className;
 
   return (
     <circle

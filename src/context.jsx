@@ -64,6 +64,14 @@ function checkForErrors(change, state) {
     if(!/^[a-zA-Z]+$/.test(change.currentGuess) && change.currentGuess !== "") {
       return "Guesses must be letters only";
     }
+    const lastLetter = change
+      .currentGuess
+      .substring(change.currentGuess.length - 1, change.currentGuess.length);
+
+    if(change.currentGuess.length > 1 && !state.letterMap[lastLetter]) {
+      // this letter doesn't exist
+      return "No such letter";
+    }
     // we also need to check if the letters are on the right side,
     // which is basically the whole schtick of the game
   }
