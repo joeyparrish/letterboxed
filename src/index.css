@@ -73,3 +73,11 @@ text.past,text.active {
 text.active {
   font-weight: bold;
 }
+
+input {
+  background-color: var(--background-color);
+  border: none;
+  font-size: 60px;
+  outline: none;
+  width: 100%;
+}
