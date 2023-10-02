@@ -1,5 +1,5 @@
 import { useGame } from '../context';
-import { fancyJoin } from '../utils'
+import { fancyJoin, checkForWin } from '../utils';
 
 function WhiteSpan() {
   return <span className="join"> - </span>;
@@ -14,6 +14,8 @@ function Guesses() {
 
   const errorString = error ? error : <br />;
 
+  const bannerClass = state.won ? "winner" : "loser";
+
   return (
     <div>
       <p>
@@ -21,6 +23,9 @@ function Guesses() {
       </p>
       <p className='error'>
         { errorString }
+      </p>
+      <p className={ bannerClass }>
+        You win!
       </p>
     </div>
   )
@@ -54,10 +59,12 @@ function createKeyDown(state, setState) {
     console.debug('keydown', e.key)
     // if we are adding a new guess
     if(e.key == "Enter") {
+      const newWords = [...existingWords, currentGuess];
       return setState({
-        existingWords: [...existingWords, currentGuess],
+        existingWords: newWords,
         currentGuess: currentGuess.substring(currentGuess.length - 1, currentGuess.length),
-        intent: "submit"
+        intent: "submit",
+        won: checkForWin(newWords)
       });
     }
 

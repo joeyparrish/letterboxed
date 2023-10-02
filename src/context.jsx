@@ -32,6 +32,8 @@ const baseGame = {
   letters,
   // generated location map of the letters
   letterMap: generateMap(letters),
+  // did the player win?
+  won: false,
 
   // debug mode
   __debug: false,
@@ -91,7 +93,7 @@ function checkForErrors(change, state) {
       return "guess must be 3 letters or more";
     }
     if(!state.dictionary.has(state.currentGuess)) {
-      return `${state.currentGuess} is not a recognized word`;
+      // return `${state.currentGuess} is not a recognized word`;
     }
   }
 

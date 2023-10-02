@@ -40,7 +40,6 @@ function shuffle(array) {
 }
 
 // this is done at the top level because we're not ever going to change the dictionary
-
 // No Q because that's annoying
 const consonants = 'BCDFGHJKLMNPRSTVWXYZ';
 const vowels = 'AEIOU';
@@ -54,3 +53,13 @@ for(let i = 0; i < 4; i ++) {
 }
 
 export const letters = _letters;
+
+export function checkForWin(existingWords) {
+  let letterSet = new Set();
+  existingWords.forEach(word => word
+    .split("").forEach(letter => letterSet.add(letter))
+  );
+  const winCondition = letterSet.size === 12;
+
+  return winCondition;
+}
