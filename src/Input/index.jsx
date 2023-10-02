@@ -21,30 +21,20 @@ export default function Input() {
   const { currentGuess, existingWords, __debug } = state;
 
   function onChange(e) {
-    // if we are adding a letter
+    // if we are adding a letter or removing a letter
+    console.debug('onChange', e.target.value)
     const value = e.target.value.toUpperCase();
-    const lastLetter = value[value.length - 1];
-    const updatedLetterMap = {
-      [lastLetter]: {
-        ...state.letterMap[lastLetter],
-        className: "lead"
-      }
-    }
 
     return setState({
       currentGuess: value,
-      intent: "guess",
-      letterMap: {
-        ...state.letterMap,
-        ...updatedLetterMap
-      }
+      intent: "guess"
     });
   }
 
   function keyDown(e) {
+    console.debug('keydown', e.key)
     // if we are adding a new guess
     if(e.key == "Enter") {
-
       return setState({
         existingWords: [...existingWords, currentGuess],
         currentGuess: currentGuess.substring(currentGuess.length - 1, currentGuess.length),

@@ -1,11 +1,15 @@
 import { useGame } from '../context';
 
+function deriveClass(letter) {
+  return ""
+}
+
 function Circle({ letter }) {
   const [ state ] = useGame();
   const { letterMap } = state;
 
-  const [ x, y ] = letterMap[letter].coords;
-  const className = letterMap[letter].className;
+  const [ x, y ] = letterMap[letter];
+  const className = deriveClass(letter);
 
   return (
     <circle

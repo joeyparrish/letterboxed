@@ -47,10 +47,7 @@ function generateMap(letters) {
   const map = {};
   letters.forEach((row, i) => {
     row.forEach((letter, j) => {
-      map[letter] = {
-        className: "",
-        coords: circleCoordinates[i * 3 +  j]
-      }
+      map[letter] = circleCoordinates[i * 3 +  j];
     });
   });
   return map;

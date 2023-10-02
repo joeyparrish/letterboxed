@@ -8,11 +8,10 @@ function Path({ word, current = false }) {
   const [ state ] = useGame();
   const { letterMap } = state;
 
-  console.log(word, current);
   const paths = [];
   for(let i = 1; i < word.length; i++) {
-    const [ x1, y1 ] = letterMap[word[i - 1]].coords;
-    const [ x2, y2 ] = letterMap[word[i]].coords;
+    const [ x1, y1 ] = letterMap[word[i - 1]];
+    const [ x2, y2 ] = letterMap[word[i]];
     paths.push(`M ${x1} ${y1} L ${x2} ${y2} Z`);
   }
 
