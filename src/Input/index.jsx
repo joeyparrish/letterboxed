@@ -39,22 +39,9 @@ function Buttons({ keyDown }) {
   )
 }
 
-export default function Input() {
-  const [ state, setState ] = useGame();
-  const { currentGuess, existingWords, __debug } = state;
-
-  function onChange(e) {
-    // if we are adding a letter or removing a letter
-    console.debug('onChange', e.target.value)
-    const value = e.target.value.toUpperCase();
-
-    return setState({
-      currentGuess: value,
-      intent: "guess"
-    });
-  }
-
-  function keyDown(e) {
+function createKeyDown(state, setState) {
+  return function keyDown(e) {
+    const { currentGuess, existingWords, __debug } = state;
     console.debug('keydown', e.key)
     // if we are adding a new guess
     if(e.key == "Enter") {
@@ -117,6 +104,24 @@ export default function Input() {
       });
     }
   }
+}
+
+export default function Input() {
+  const [ state, setState ] = useGame();
+  const { currentGuess } = state;
+
+  function onChange(e) {
+    // if we are adding a letter or removing a letter
+    console.debug('onChange', e.target.value)
+    const value = e.target.value.toUpperCase();
+
+    return setState({
+      currentGuess: value,
+      intent: "guess"
+    });
+  }
+
+  const keyDown = createKeyDown(state, setState);
 
   return (
     <div>
