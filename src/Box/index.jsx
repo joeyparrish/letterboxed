@@ -5,6 +5,8 @@ import Circles from './Circles';
 export default function Box() {
   return (
     <svg
+      height="50svh"
+      width="50svh"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 600">
       <rect

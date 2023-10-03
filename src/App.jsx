@@ -1,4 +1,3 @@
-import "./App.css";
 import Input from "./Input";
 import Box from "./Box";
 import { GameProvider } from './context';
