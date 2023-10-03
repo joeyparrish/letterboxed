@@ -1,22 +1,11 @@
-function* iterator(elements, index) {
+export function fancyJoin(elements, joiner) {
+  let index = 1;
+  let array = [elements[0]];
   while(index < elements.length) {
-    yield elements[index];
+    array.push(joiner);
+    array.push(elements[index]);
     index++;
   }
-}
-
-export function fancyJoin(elements, joiner) {
-  const generator = iterator(elements, 0);
-  let result = generator.next();
-  let array = [result.value];
-  result = generator.next();
-
-  while(result.done === false) {
-    array.push(joiner);
-    array.push(result.value);
-    result = generator.next();
-  }
-
   return array;
 }
 
