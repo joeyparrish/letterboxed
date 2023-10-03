@@ -21,7 +21,7 @@ function Path({ word, current = false }) {
         <path d={d} className={current ? "active" : "past"} key={i}/>
       ))}
     </g>
-  )
+  );
 }
 
 export default function Paths() {
