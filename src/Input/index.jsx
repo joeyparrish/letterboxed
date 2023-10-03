@@ -42,7 +42,7 @@ function Buttons({ keyDown }) {
   );
 
   const deleteButton = (
-    <button onClick={() => keyDown({ key: '__delete' })}>Delete</button>
+    <button onClick={() => keyDown({ key: '__delete' })}>Rewind</button>
   )
 
   const helpButton = (
@@ -123,6 +123,7 @@ function createKeyDown(state, setState) {
       return setState({
         currentGuess: "",
         existingWords: [],
+        won: false
       });
     }
 

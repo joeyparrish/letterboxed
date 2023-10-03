@@ -79,6 +79,7 @@ circle.past {
 
 circle.lead {
   fill: black;
+  stroke: var(--background-color);
 }
 
 text {
