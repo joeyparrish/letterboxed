@@ -43,11 +43,16 @@ function Buttons({ keyDown }) {
     <button onClick={() => keyDown({ key: '__delete' })}>Delete</button>
   )
 
+  const helpButton = (
+    <button onClick={() => {}}>Help</button>
+  )
+
   return (
     <div>
       {restartButton}
       {submitButton}
       {deleteButton}
+      {helpButton}
     </div>
   )
 }
