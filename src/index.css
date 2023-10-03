@@ -111,3 +111,19 @@ button {
   height: 2.2rem;
   margin: 5px;
 }
+
+.banner {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  transition: font-size 0.5s;
+}
+
+.loser {
+  font-size: 0rem;
+}
+
+.winner {
+  font-size: 3rem;
+  transition-timing-function: ease-out;
+}

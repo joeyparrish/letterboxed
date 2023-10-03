@@ -82,7 +82,7 @@ function checkForErrors(change, state) {
     const [,, group1] = state.letterMap[secondToLastLetter];
     const [,, group2] = state.letterMap[lastLetter];
     if(group1 == group2) {
-      return "letters must be on different sides";
+      return "consecutive letters must be on different sides";
     }
   }
   if(change.intent === "rewind") {
@@ -93,7 +93,7 @@ function checkForErrors(change, state) {
       return "guess must be 3 letters or more";
     }
     if(!state.dictionary.has(state.currentGuess)) {
-      // return `${state.currentGuess} is not a recognized word`;
+      return `${state.currentGuess} is not a recognized word`;
     }
   }
 

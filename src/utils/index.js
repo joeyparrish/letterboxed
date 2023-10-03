@@ -40,8 +40,8 @@ function shuffle(array) {
 }
 
 // this is done at the top level because we're not ever going to change the dictionary
-// No Q because that's annoying
-const consonants = 'BCDFGHJKLMNPRSTVWXYZ';
+// No Q, X, or Z because they're annoying
+const consonants = 'BCDFGHJKLMNPRSTVWY';
 const vowels = 'AEIOU';
 const randomConsonants = shuffle(consonants.split(""));
 const randomVowels = shuffle(vowels.split(""));
@@ -62,4 +62,9 @@ export function checkForWin(existingWords) {
   const winCondition = letterSet.size === 12;
 
   return winCondition;
+}
+
+// this is not actual, real uuid, mostly to get around the react key warning
+export function uuid() {
+  return Math.random().toString(36).substring(2, 15);
 }

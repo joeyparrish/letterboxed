@@ -1,8 +1,8 @@
 import { useGame } from '../context';
-import { fancyJoin, checkForWin } from '../utils';
+import { fancyJoin, checkForWin, uuid } from '../utils';
 
 function WhiteSpan() {
-  return <span className="join"> - </span>;
+  return <span className="join" key={uuid()}> - </span>;
 }
 
 function Guesses() {
@@ -13,8 +13,7 @@ function Guesses() {
     fancyJoin(existingWords, <WhiteSpan/>) : <br />;
 
   const errorString = error ? error : <br />;
-
-  const bannerClass = state.won ? "winner" : "loser";
+  const bannerClass = "banner " + (state.won ? "winner" : "loser");
 
   return (
     <div>
@@ -24,9 +23,9 @@ function Guesses() {
       <p className='error'>
         { errorString }
       </p>
-      <p className={ bannerClass }>
-        You win!
-      </p>
+      <div className={ bannerClass }>
+        🎉 You win! 🎉
+      </div>
     </div>
   )
 }
