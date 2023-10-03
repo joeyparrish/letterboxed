@@ -127,3 +127,29 @@ button {
   font-size: 3rem;
   transition-timing-function: ease-out;
 }
+
+.modal {
+  display: flex;
+  position: absolute;
+  top: 0;
+  background-color: var(--past-color);
+  height: 95%;
+  margin: 10px;
+  border-radius: 1em;
+}
+
+.modal p {
+  font-size: 16px;
+  text-align: left;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.modal button {
+  margin-left: 1rem;
+}
+
+.modal img {
+  margin-top: 20px;
+  margin-right: 7.5px;
+}

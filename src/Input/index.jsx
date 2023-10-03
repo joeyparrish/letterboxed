@@ -1,5 +1,7 @@
 import { useGame } from '../context';
 import { fancyJoin, checkForWin, uuid } from '../utils';
+import Modal from '../utils/Modal';
+import { createPortal } from 'react-dom';
 
 function WhiteSpan() {
   return <span className="join" key={uuid()}> - </span>;
@@ -44,7 +46,7 @@ function Buttons({ keyDown }) {
   )
 
   const helpButton = (
-    <button onClick={() => {}}>Help</button>
+    <button onClick={() => keyDown({ key: '/' })}>Help?</button>
   )
 
   return (
@@ -109,6 +111,13 @@ function createKeyDown(state, setState) {
       }
     }
 
+    // show help modal
+    if(e.key === "/") {
+      return setState({
+        help: true
+      })
+    }
+
     // restart the game
     if(e.key === 'Escape') {
       return setState({
@@ -129,7 +138,7 @@ function createKeyDown(state, setState) {
 
 export default function Input() {
   const [ state, setState ] = useGame();
-  const { currentGuess } = state;
+  const { currentGuess, help } = state;
 
   function onChange(e) {
     // if we are adding a letter or removing a letter
@@ -143,12 +152,17 @@ export default function Input() {
   }
 
   const keyDown = createKeyDown(state, setState);
+  const closeModal = () => setState({ help: false });
 
   return (
     <div>
       <input type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
-      <Buttons keyDown={keyDown} />
+      <Buttons keyDown={keyDown}/>
       <Guesses />
+      { help && createPortal(
+        <Modal closeModal={ closeModal } />,
+        document.body
+      )}
     </div>
   )
 }

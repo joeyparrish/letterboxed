@@ -34,6 +34,8 @@ const baseGame = {
   letterMap: generateMap(letters),
   // did the player win?
   won: false,
+  // showing help menu
+  help: false,
 
   // debug mode
   __debug: false,
@@ -126,7 +128,7 @@ export function GameProvider({ children }) {
     if(loading) {
       loadDictionary();
     }
-  })
+  });
 
   return !loading ? (
     <Game.Provider value={[state, setState]}>
