@@ -92,7 +92,7 @@ function checkForErrors(change, state) {
     if(state.currentGuess.length < 3) {
       return "guess must be 3 letters or more";
     }
-    if(!state.dictionary.has(state.currentGuess)) {
+    if(!state.dictionary.has(state.currentGuess) && state.__debug === false) {
       return `${state.currentGuess} is not a recognized word`;
     }
   }
