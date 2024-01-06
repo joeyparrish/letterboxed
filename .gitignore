@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated sources, scraped from NYT:
+src/utils/dictionary.js
+src/utils/letters.js

@@ -3,8 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "rspack serve",
-    "build": "rspack build"
+    "scrape": "node scrape.js",
+    "dev": "node scrape.js && rspack serve",
+    "build": "node scrape.js && rspack build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -14,6 +15,11 @@
     "@rspack/cli": "latest",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
+    "safe-eval": "^0.4.1",
     "typescript": "^5.0.4"
+  },
+  "comment-engines": "fetch() requires node 18+, used to scrape NYT",
+  "engines": {
+    "node": ">=18"
   }
 }

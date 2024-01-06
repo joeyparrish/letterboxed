@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { loadWords, letters } from './utils';
+import { letters } from './utils/letters';
+import { dictionary } from './utils/dictionary';
 
 const circleCoordinates = [
   [175, 100],
@@ -39,7 +40,6 @@ const baseGame = {
 
   // debug mode
   __debug: false,
-  loading: true
 };
 
 function generateMap(letterList) {
@@ -94,7 +94,7 @@ function checkForErrors(change, state) {
     if(state.currentGuess.length < 3) {
       return "guess must be 3 letters or more";
     }
-    if(!state.dictionary.has(state.currentGuess) && state.__debug === false) {
+    if(!dictionary.has(state.currentGuess) && state.__debug === false) {
       return `${state.currentGuess} is not a recognized word`;
     }
   }
@@ -104,7 +104,7 @@ function checkForErrors(change, state) {
 
 export function GameProvider({ children }) {
   const [state, set] = useState(baseGame);
-  const { loading } = state;
+  const {} = state;
 
   function setState(change) {
     const error = checkForErrors(change, state);
@@ -115,22 +115,7 @@ export function GameProvider({ children }) {
     }
   }
 
-  const loadDictionary = async () => {
-    const dictionary = await loadWords()
-
-    setState({
-      dictionary,
-      loading: false
-    })
-  }
-
-  useEffect(() => {
-    if(loading) {
-      loadDictionary();
-    }
-  });
-
-  return !loading ? (
+  return (
     <Game.Provider value={[state, setState]}>
       {children}
       {
@@ -141,5 +126,5 @@ export function GameProvider({ children }) {
         )
       }
     </Game.Provider>
-  ) : "loading...";
+  );
 }
