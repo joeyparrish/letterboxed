@@ -46,6 +46,8 @@ span.join {
   width: 100%;
   text-align: center;
   max-height: 50svh;
+  justify-content: center;
+  max-width: 80%;
 }
 
 svg {
