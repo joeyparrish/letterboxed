@@ -1,5 +1,6 @@
 import Input from "./Input";
 import Box from "./Box";
+import Buttons from "./Buttons";
 import { GameProvider } from './context';
 
 function App() {
@@ -10,6 +11,9 @@ function App() {
 			</div>
 			<div className="row">
 				<Box />
+			</div>
+			<div className="row">
+				<Buttons />
 			</div>
 		</GameProvider>
 	);

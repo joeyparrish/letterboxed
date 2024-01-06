@@ -32,34 +32,7 @@ function Guesses() {
   )
 }
 
-function Buttons({ keyDown }) {
-  const restartButton = (
-    <button onClick={() => keyDown({ key: 'Escape' })}>Restart</button>
-  )
-
-  const submitButton = (
-    <button onClick={() => keyDown({ key: 'Enter' })}>Submit</button>
-  );
-
-  const deleteButton = (
-    <button onClick={() => keyDown({ key: '__delete' })}>Rewind</button>
-  )
-
-  const helpButton = (
-    <button onClick={() => keyDown({ key: '/' })}>Help?</button>
-  )
-
-  return (
-    <div>
-      {restartButton}
-      {submitButton}
-      {deleteButton}
-      {helpButton}
-    </div>
-  )
-}
-
-function createKeyDown(state, setState) {
+function createKeyDownHandler(state, setState) {
   return function keyDown(e) {
     const { currentGuess, existingWords, __debug } = state;
     console.debug('keydown', e.key)
@@ -112,14 +85,14 @@ function createKeyDown(state, setState) {
     }
 
     // show help modal
-    if(e.key === "/") {
+    if(e.key === "?") {
       return setState({
         help: true
       })
     }
 
     // restart the game
-    if(e.key === 'Escape') {
+    if(e.key === '__restart') {
       return setState({
         currentGuess: "",
         existingWords: [],
@@ -128,11 +101,18 @@ function createKeyDown(state, setState) {
     }
 
     // show debugging info
+    /* Off by default, uncomment to enable debugging in your deployment
     if(e.key === ".") {
       return setState({
         __debug: !__debug,
         intent: "debug"
       });
+    }
+    */
+
+    // close the modal
+    if(e.key === 'Escape') {
+      return setState({help: false});
     }
   }
 }
@@ -152,13 +132,12 @@ export default function Input() {
     });
   }
 
-  const keyDown = createKeyDown(state, setState);
+  const keyDown = createKeyDownHandler(state, setState);
   const closeModal = () => setState({ help: false });
 
   return (
     <div>
       <input id="input" type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
-      <Buttons keyDown={keyDown}/>
       <Guesses />
       { help && createPortal(
         <Modal closeModal={ closeModal } />,
