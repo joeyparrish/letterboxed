@@ -3,21 +3,25 @@ import { letters } from './utils/letters';
 import { dictionary } from './utils/dictionary';
 
 const circleCoordinates = [
+  // top
   [175, 100],
   [300, 100],
   [425, 100],
-  
+
+  // left
   [100, 175],
   [100, 300],
   [100, 425],
 
+  // right
   [500, 175],
   [500, 300],
   [500, 425],
 
+  // bottom
   [175, 500],
   [300, 500],
-  [425, 500]
+  [425, 500],
 ];
 
 const baseGame = {

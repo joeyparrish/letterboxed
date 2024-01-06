@@ -23,11 +23,17 @@ async function scrape() {
       ');';
   fs.writeFileSync('src/utils/dictionary.js', dictionaryCode);
 
-  // Write the letters, in the format expected by the original clone from
-  // SivanMehta.
+  // Write the letters, in the format and order expected by the original clone
+  // from SivanMehta.
+  const sides = [
+    gameData.sides[0].split(''),
+    gameData.sides[3].split(''),
+    gameData.sides[1].split(''),
+    gameData.sides[2].split(''),
+  ];
   const lettersCode =
       'export const letters = ' +
-      JSON.stringify(gameData.sides.map(x => x.split('')), null, '  ') +
+      JSON.stringify(sides, null, '  ') +
       ';';
   fs.writeFileSync('src/utils/letters.js', lettersCode);
 
