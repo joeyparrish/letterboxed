@@ -157,7 +157,7 @@ export default function Input() {
 
   return (
     <div>
-      <input type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
+      <input id="input" type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
       <Buttons keyDown={keyDown}/>
       <Guesses />
       { help && createPortal(

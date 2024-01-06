@@ -119,6 +119,20 @@ export function GameProvider({ children }) {
     }
   }
 
+  function forwardKeyboardEvents(e) {
+    const input = document.getElementById('input');
+    if (e.target != input) {
+      const e2 = new KeyboardEvent(e.type, e);
+      console.log({e, e2});
+      input.focus();
+      input.dispatchEvent(e2);
+    }
+  }
+
+  document.addEventListener('keydown', forwardKeyboardEvents);
+  document.addEventListener('keyup', forwardKeyboardEvents);
+  document.addEventListener('keypress', forwardKeyboardEvents);
+
   return (
     <Game.Provider value={[state, setState]}>
       {children}
