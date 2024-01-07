@@ -18,26 +18,29 @@ function Guesses() {
     <div class="guesses">
       { content }
     </div>
-  )
+  );
 }
 
 function createKeyDownHandler(state, setState) {
   return function keyDown(e) {
     const { currentGuess, existingWords, __debug } = state;
     console.debug('keydown', e.key)
+
     // if we are adding a new guess
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
       const newWords = [...existingWords, currentGuess];
       return setState({
         existingWords: newWords,
-        currentGuess: currentGuess.substring(currentGuess.length - 1, currentGuess.length),
+        currentGuess: currentGuess.substring(
+            currentGuess.length - 1, currentGuess.length),
         intent: "submit",
         won: checkForWin(newWords)
       });
     }
 
     // if we are rewinding from a current guess to a previous guess
-    if(e.key === "Backspace" && currentGuess.length === 1 && state.existingWords.length > 0) {
+    if (e.key === "Backspace" && currentGuess.length === 1 &&
+        state.existingWords.length > 0) {
       const previousWord = existingWords.pop();
       return setState({
         currentGuess: previousWord,
@@ -47,13 +50,13 @@ function createKeyDownHandler(state, setState) {
     }
 
     // simulating the backspace key via the delete button
-    if(e.key === "__delete") {
+    if (e.key === "__delete") {
       // there's nothing to delete at the beginning of the game
-      if(currentGuess.length === 0) {
+      if (currentGuess.length === 0) {
         return;
       }
       // manually do the rewind event
-      if(currentGuess.length == 1 && state.existingWords.length > 0) {
+      if (currentGuess.length == 1 && state.existingWords.length > 0) {
         const previousWord = existingWords.pop();
         return setState({
           currentGuess: previousWord,
@@ -62,7 +65,7 @@ function createKeyDownHandler(state, setState) {
         });
       }
       // simulate a deletion
-      if(currentGuess.length >= 1) {
+      if (currentGuess.length >= 1) {
         // simulate the backspace key
         setState({
           currentGuess: currentGuess.substring(0, currentGuess.length - 1),
@@ -74,14 +77,14 @@ function createKeyDownHandler(state, setState) {
     }
 
     // show help modal
-    if(e.key === "?") {
+    if (e.key === "?") {
       return setState({
         help: true
-      })
+      });
     }
 
     // restart the game
-    if(e.key === '__restart') {
+    if (e.key === '__restart') {
       return setState({
         currentGuess: "",
         existingWords: [],
@@ -91,7 +94,7 @@ function createKeyDownHandler(state, setState) {
 
     // show debugging info
     /* Off by default, uncomment to enable debugging in your deployment
-    if(e.key === ".") {
+    if (e.key === ".") {
       return setState({
         __debug: !__debug,
         intent: "debug"
@@ -100,7 +103,7 @@ function createKeyDownHandler(state, setState) {
     */
 
     // close the modal
-    if(e.key === 'Escape') {
+    if (e.key === 'Escape') {
       return setState({help: false});
     }
   }
@@ -117,7 +120,7 @@ export default function Input() {
 
     return setState({
       currentGuess: value,
-      intent: "guess"
+      intent: "guess",
     });
   }
 
@@ -128,10 +131,9 @@ export default function Input() {
     <div>
       <input id="input" type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
       <Guesses />
-      { help && createPortal(
-        <Modal closeModal={ closeModal } />,
-        document.body
-      )}
+      {
+        help && createPortal(<Modal closeModal={closeModal} />, document.body)
+      }
     </div>
-  )
+  );
 }
