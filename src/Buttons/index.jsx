@@ -63,7 +63,7 @@ export default function Buttons() {
   );
 
   const submitButton = (
-    <button onClick={() => submit(state, setState)}>Submit</button>
+    <button onClick={() => submit(state, setState)}>Enter</button>
   );
 
   const deleteButton = (
@@ -71,14 +71,14 @@ export default function Buttons() {
   );
 
   const helpButton = (
-    <button id="helpButton" onClick={(state, setState) => help()}>?</button>
+    <button id="helpButton" onClick={() => help(state, setState)}>?</button>
   );
 
   return (
-    <div>
+    <div id="buttonRow">
       {restartButton}
-      {submitButton}
       {deleteButton}
+      {submitButton}
       {helpButton}
     </div>
   );

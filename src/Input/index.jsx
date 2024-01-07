@@ -9,25 +9,14 @@ function WhiteSpan() {
 
 function Guesses() {
   const [ state ] = useGame();
-  const { existingWords, error } = state;
+  const { existingWords } = state;
 
   const content = existingWords.length > 0 ?
     fancyJoin(existingWords, <WhiteSpan/>) : <br />;
 
-  const errorString = error ? error : <br />;
-  const bannerClass = "banner " + (state.won ? "winner" : "loser");
-
   return (
-    <div>
-      <p>
-        { content }
-      </p>
-      <p className='error'>
-        { errorString }
-      </p>
-      <div className={ bannerClass }>
-        🎉 You win! 🎉
-      </div>
+    <div class="guesses">
+      { content }
     </div>
   )
 }

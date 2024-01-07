@@ -1,12 +1,3 @@
-#container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 320px;
-  min-height: 100svh;
-}
-
 :root {
   --background-color: #faa6a4;
   --past-color: #eacecb;
@@ -15,26 +6,22 @@
 body {
   background-color: var(--background-color);
   font-family: Arial, Helvetica, sans-serif;
-  height: 100svh;
-  overflow: hidden;
+  margin: 0;
 }
 
-path, circle, rect {
-  stroke-width: 5px;
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5em;
 }
 
-text {
-  font-size: 60px;
-  text-anchor: middle;
-}
-
-p {
-  font-size: 24px;
+.guesses {
+  font-size: 4svmin;
   text-align: center;
-}
-
-p.error {
-  font-size: 16px;
+  margin: 1em;
+  height: 4em;
 }
 
 span.join {
@@ -43,11 +30,8 @@ span.join {
 
 .row {
   display: flex;
-  width: 100%;
   text-align: center;
-  max-height: 50svh;
   justify-content: center;
-  max-width: 80%;
 }
 
 svg {
@@ -55,6 +39,7 @@ svg {
 }
 
 path, circle, rect {
+  /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   stroke-width: 5px;
   stroke: black;
 }
@@ -85,13 +70,14 @@ circle.lead {
 }
 
 text {
+  /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   font-size: 60px;
   text-anchor: middle;
   font-family: Arial, Helvetica, sans-serif;
   fill: white;
 }
 
-text.past,text.active {
+text.past, text.active {
   fill: black;
 }
 
@@ -102,8 +88,9 @@ text.active {
 input {
   background-color: var(--background-color);
   border: none;
-  border-bottom: 2px solid black;
-  font-size: 60px;
+  border-bottom: calc(max(0.1em,2px)) solid black;
+  font-size: 8svmin;
+  font-weight: bolder;
   outline: none;
   width: 100%;
   text-align: center;
@@ -111,31 +98,14 @@ input {
 }
 
 button {
-  font-size: 20px;
+  font-size: 4svmin;
   color: black;
   -webkit-text-fill-color: black;
   background-color: var(--background-color);
-  border: 2px solid black;
-  border-radius: 1em;
-  width: 7rem;
-  height: 3rem;
-  margin: 5px;
-}
-
-.banner {
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  transition: font-size 0.5s;
-}
-
-.loser {
-  font-size: 0rem;
-}
-
-.winner {
-  font-size: 3rem;
-  transition-timing-function: ease-out;
+  border: calc(max(0.1em,2px)) solid black;
+  border-radius: 1.5em;
+  width: 6em;
+  height: 3em;
 }
 
 .modal {
@@ -165,9 +135,25 @@ button {
   margin-right: 7.5px;
 }
 
+#buttonRow {
+  display: flex;
+  width: 100svw;
+  max-width: 500px;
+  justify-content: space-around;
+  margin-top: 2em;
+}
+
 #helpButton {
+  /* Put this on the right, out of flow with the rest. */
   position: absolute;
   right: 1em;
   width: 2em;
   height: 2em;
+  margin-top: 0.5em;
+
+  @media only screen and (max-width: 650px) {
+    /* On small screens, put it where it would naturally go in the flow. */
+    position: relative;
+    right: auto;
+  }
 }
