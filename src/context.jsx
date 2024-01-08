@@ -1,6 +1,7 @@
 import { createContext, useState, useContext } from 'react';
 import { letters } from './utils/letters';
 import { dictionary } from './utils/dictionary';
+import { deleteLetter, submit } from './Buttons';
 
 const circleCoordinates = [
   // top
@@ -104,7 +105,6 @@ function checkForErrors(change, state) {
 
 export function GameProvider({ children }) {
   const [state, set] = useState(baseGame);
-  const {} = state;
 
   function setState(change) {
     const error = checkForErrors(change, state);
@@ -115,13 +115,39 @@ export function GameProvider({ children }) {
     }
   }
 
+  function keyHandler(e) {
+    const { currentGuess } = state;
+
+    console.debug('keyHandler', e.key);
+
+    if (e.key === 'Backspace') {
+      return deleteLetter(state, setState);
+    } else if (e.key === 'Enter') {
+      return submit(state, setState);
+    } else if (e.key === '?') {
+      return setState({ help: true });
+    } else if (e.key === 'Escape') {
+      // close all modals
+      return setState({ help: false });
+    } else if (e.key === '.') {
+      // Off by default, uncomment to enable debugging in your deployment
+      /*
+      return setState({
+        __debug: !__debug,
+        intent: "debug",
+      });
+      */
+    } else if (/^[a-zA-Z]$/.exec(e.key) !== null) {
+      return setState({
+        intent: 'guess',
+        currentGuess: currentGuess + e.key.toUpperCase(),
+      });
+    }
+  }
+
   // Use on* attributes instead of addEventListener, or the handler will get
   // re-added on each re-render of the component.
-  /*
-  document.onkeydown = forwardKeyboardEvents;
-  document.onkeyup = forwardKeyboardEvents;
-  document.onkeypress = forwardKeyboardEvents;
-  */
+  document.onkeyup = keyHandler;
 
   return (
     <Game.Provider value={[state, setState]}>

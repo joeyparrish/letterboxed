@@ -16,7 +16,7 @@ function restart(state, setState) {
   });
 }
 
-function submit(state, setState) {
+export function submit(state, setState) {
   const { currentGuess, existingWords } = state;
 
   const newWords = [...existingWords, currentGuess];
@@ -28,7 +28,7 @@ function submit(state, setState) {
   });
 }
 
-function deleteLetter(state, setState) {
+export function deleteLetter(state, setState) {
   const { currentGuess, existingWords } = state;
 
   if (currentGuess.length === 0) {
