@@ -46,15 +46,20 @@ span.join {
 #letter-box path, #letter-box circle, #letter-box rect {
   /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   stroke-width: 5px;
+}
+
+#letter-box rect {
   stroke: black;
 }
 
-#letter-box .active {
-  stroke: var(--background-color);
+#letter-box path {
+  stroke: black;
 }
 
 #letter-box path.active {
+  stroke: var(--background-color);
   stroke-dasharray: 4% 4%;
+  /* FIXME: should cover a past path with white */
 }
 
 #letter-box path.past {
@@ -63,10 +68,17 @@ span.join {
 
 #letter-box circle {
   fill: white;
+  stroke: black;
 }
 
 #letter-box circle.past {
   fill: var(--background-color);
+  stroke: black;
+}
+
+#letter-box circle.active {
+  fill: white;
+  stroke: var(--background-color);
 }
 
 #letter-box circle.lead {

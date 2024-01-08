@@ -1,4 +1,5 @@
 import { useGame } from '../context';
+import { letterClasses } from './classes';
 
 const offset = 125;
 
@@ -18,7 +19,7 @@ function Letter({ letter, x, y }) {
       onClick={addLetter}
       x={x}
       y={y}
-      className="">
+      className={letterClasses(letter, state)}>
       {letter}
     </text>
   )
