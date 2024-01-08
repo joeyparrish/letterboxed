@@ -61,44 +61,40 @@ const Game = createContext(baseGame);
 export const useGame = () => useContext(Game);
 
 function checkForErrors(change, state) {
-  if(change.intent === "guess") {
-    if(!/^[a-zA-Z]+$/.test(change.currentGuess) && change.currentGuess !== "") {
+  if (change.intent === "guess") {
+    if (!/^[a-zA-Z]+$/.test(change.currentGuess) && change.currentGuess !== "") {
       return "guesses must be letters only";
     }
-    const lastLetter = change
-      .currentGuess
-      .substring(change.currentGuess.length - 1, change.currentGuess.length);
+
+    const lastLetter = change.currentGuess[change.currentGuess.length - 1];
 
     // this letter doesn't exist
-    if(!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
+    if (!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
       return "no such letter on the board";
     }
 
     // Typing or removing the first letter of the game cannot
     // produce an invalid path
-    if(change.currentGuess.length <= 1) {
+    if (change.currentGuess.length <= 1) {
       return false;
     }
 
-    const secondToLastLetter = change
-      .currentGuess
-      .substring(change.currentGuess.length - 2, change.currentGuess.length - 1);
+    const secondToLastLetter =
+        change.currentGuess[change.currentGuess.length - 2];
 
     console.debug('checking path from ', secondToLastLetter, 'to', lastLetter);
     const [,, group1] = state.letterMap[secondToLastLetter];
     const [,, group2] = state.letterMap[lastLetter];
-    if(group1 == group2) {
+    if (group1 == group2) {
       return "consecutive letters must be on different sides";
     }
   }
-  if(change.intent === "rewind") {
-    // maybe there's something to check here?
-  }
-  if(change.intent === "submit") {
-    if(state.currentGuess.length < 3) {
+
+  if (change.intent === "submit") {
+    if (state.currentGuess.length < 3) {
       return "guess must be 3 letters or more";
     }
-    if(!dictionary.has(state.currentGuess) && state.__debug === false) {
+    if (!dictionary.has(state.currentGuess) && state.__debug === false) {
       return `${state.currentGuess} is not a recognized word`;
     }
   }
