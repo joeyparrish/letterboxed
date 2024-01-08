@@ -1,7 +1,5 @@
 import { useGame } from '../context';
 import { fancyJoin, checkForWin, uuid } from '../utils';
-import Modal from '../utils/Modal';
-import { createPortal } from 'react-dom';
 
 function WhiteSpan() {
   return <span className="join" key={uuid()}> - </span>;
@@ -15,7 +13,7 @@ function Guesses() {
     fancyJoin(existingWords, <WhiteSpan/>) : <br />;
 
   return (
-    <div class="guesses">
+    <div className="guesses">
       { content }
     </div>
   );
@@ -24,7 +22,6 @@ function Guesses() {
 function createKeyDownHandler(state, setState) {
   return function keyDown(e) {
     const { currentGuess, existingWords, __debug } = state;
-    console.debug('keydown', e.key)
 
     // if we are adding a new guess
     if (e.key == "Enter") {
@@ -34,7 +31,7 @@ function createKeyDownHandler(state, setState) {
         currentGuess: currentGuess.substring(
             currentGuess.length - 1, currentGuess.length),
         intent: "submit",
-        won: checkForWin(newWords)
+        won: checkForWin(newWords),
       });
     }
 
@@ -45,7 +42,7 @@ function createKeyDownHandler(state, setState) {
       return setState({
         currentGuess: previousWord,
         existingWords,
-        intent: "rewind"
+        intent: "rewind",
       });
     }
 
@@ -61,7 +58,7 @@ function createKeyDownHandler(state, setState) {
         return setState({
           currentGuess: previousWord,
           existingWords,
-          intent: "rewind"
+          intent: "rewind",
         });
       }
       // simulate a deletion
@@ -69,7 +66,7 @@ function createKeyDownHandler(state, setState) {
         // simulate the backspace key
         setState({
           currentGuess: currentGuess.substring(0, currentGuess.length - 1),
-          intent: "guess"
+          intent: "guess",
         });
         // then invoke the event again
         return keyDown({ key: "Backspace" });
@@ -79,7 +76,7 @@ function createKeyDownHandler(state, setState) {
     // show help modal
     if (e.key === "?") {
       return setState({
-        help: true
+        help: true,
       });
     }
 
@@ -88,7 +85,7 @@ function createKeyDownHandler(state, setState) {
       return setState({
         currentGuess: "",
         existingWords: [],
-        won: false
+        won: false,
       });
     }
 
@@ -97,43 +94,28 @@ function createKeyDownHandler(state, setState) {
     if (e.key === ".") {
       return setState({
         __debug: !__debug,
-        intent: "debug"
+        intent: "debug",
       });
     }
     */
 
-    // close the modal
+    // close all modals
     if (e.key === 'Escape') {
-      return setState({help: false});
+      return setState({
+        help: false,
+      });
     }
   }
 }
 
 export default function Input() {
   const [ state, setState ] = useGame();
-  const { currentGuess, help } = state;
-
-  function onChange(e) {
-    // if we are adding a letter or removing a letter
-    console.debug('onChange', e.target.value)
-    const value = e.target.value.toUpperCase();
-
-    return setState({
-      currentGuess: value,
-      intent: "guess",
-    });
-  }
-
-  const keyDown = createKeyDownHandler(state, setState);
-  const closeModal = () => setState({ help: false });
+  const { currentGuess } = state;
 
   return (
-    <div>
-      <input id="input" type="text" onChange={onChange} onKeyDown={keyDown} value={currentGuess} />
+    <div id="input">
+      <div id="currentGuess">{currentGuess}</div>
       <Guesses />
-      {
-        help && createPortal(<Modal closeModal={closeModal} />, document.body)
-      }
     </div>
   );
 }

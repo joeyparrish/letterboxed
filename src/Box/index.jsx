@@ -5,7 +5,7 @@ import Circles from './Circles';
 export default function Box() {
   return (
     <svg
-      width="100%"
+      id="letter-box"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 600 600">
       <rect

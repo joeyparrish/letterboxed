@@ -52,7 +52,9 @@ function deleteLetter(state, setState) {
 }
 
 function help(state, setState) {
-  return setState({ help: true });
+  return setState({
+    help: true,
+  });
 }
 
 export default function Buttons() {

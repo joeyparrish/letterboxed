@@ -1,6 +1,8 @@
 :root {
   --background-color: #faa6a4;
   --past-color: #eacecb;
+  --modal-color: white;
+  --modal-border: gray;
 }
 
 body {
@@ -32,44 +34,47 @@ span.join {
   display: flex;
   text-align: center;
   justify-content: center;
+  width: 100%;
 }
 
-svg {
+#letter-box {
   margin: auto;
+  width: 100svmin;
+  height: 100svmin;
 }
 
-path, circle, rect {
+#letter-box path, #letter-box circle, #letter-box rect {
   /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   stroke-width: 5px;
   stroke: black;
 }
 
-.active {
+#letter-box .active {
   stroke: var(--background-color);
 }
 
-path.active {
+#letter-box path.active {
   stroke-dasharray: 4% 4%;
 }
 
-path.past {
+#letter-box path.past {
   stroke: var(--past-color);
 }
 
-circle {
+#letter-box circle {
   fill: white;
 }
 
-circle.past {
+#letter-box circle.past {
   fill: var(--background-color);
 }
 
-circle.lead {
+#letter-box circle.lead {
   fill: black;
   stroke: var(--background-color);
 }
 
-text {
+#letter-box text {
   /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   font-size: 60px;
   text-anchor: middle;
@@ -77,73 +82,80 @@ text {
   fill: white;
 }
 
-text.past, text.active {
+#letter-box text.past, #letter-box text.active {
   fill: black;
 }
 
-text.active {
+#letter-box text.active {
   font-weight: bold;
 }
 
-input {
+#input {
+  width: 100%;
+}
+
+#currentGuess {
   background-color: var(--background-color);
   border: none;
-  border-bottom: calc(max(0.1em,2px)) solid black;
+  border-bottom: calc(max(0.1em, 2px)) solid black;
   font-size: 8svmin;
   font-weight: bolder;
   outline: none;
   width: 100%;
   text-align: center;
-  padding: 0rem;
-}
-
-button {
-  font-size: 4svmin;
-  color: black;
-  -webkit-text-fill-color: black;
-  background-color: var(--background-color);
-  border: calc(max(0.1em,2px)) solid black;
-  border-radius: 1.5em;
-  width: 6em;
-  height: 3em;
+  padding: 0;
+  height: 1.5em;
 }
 
 .modal {
-  display: flex;
   position: absolute;
   top: 0;
-  background-color: var(--past-color);
-  height: 100svh;
-  margin: 10px;
-  border-radius: 1em;
-  text-align: center;
+  overflow: scroll;
+  background: var(--modal-color);
+  padding: 1em;
+  margin: 0.5em;
+  border: var(--modal-border) 0.1em solid;
+  border-radius: 0.5em;
+  display: none;
 }
 
-.modal p {
-  font-size: 16px;
+.modal.open {
+  display: block;
+}
+
+.modal * {
   text-align: left;
-  padding: 0rem 1rem;
-  margin: .5rem 1rem;
 }
 
-.modal button {
-  margin-left: 1rem;
-}
-
-.modal img {
-  margin-top: 20px;
-  margin-right: 7.5px;
+.modal .closeButton {
+  position: absolute;
+  top: 0.3em;
+  right: 0.3em;
+  font-size: 8svmin;
+  background: var(--modal-background);
+  border: none;
 }
 
 #buttonRow {
   display: flex;
   width: 100svw;
   max-width: 500px;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1em;
   margin-top: 2em;
 }
 
-#helpButton {
+#buttonRow button {
+  font-size: 4svmin;
+  color: black;
+  background-color: var(--background-color);
+  border: calc(max(0.1em, 1px)) solid black;
+  border-radius: 1.5em;
+  width: 6em;
+  height: 3em;
+}
+
+#buttonRow #helpButton {
   /* Put this on the right, out of flow with the rest. */
   position: absolute;
   right: 1em;
@@ -156,4 +168,8 @@ button {
     position: relative;
     right: auto;
   }
+}
+
+#helpModal ul {
+  padding-inline-start: 1em;
 }

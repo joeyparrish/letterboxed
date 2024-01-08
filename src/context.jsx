@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 import { letters } from './utils/letters';
 import { dictionary } from './utils/dictionary';
 
@@ -103,7 +103,7 @@ function checkForErrors(change, state) {
     }
   }
 
-  return false
+  return false;
 }
 
 export function GameProvider({ children }) {
@@ -112,26 +112,20 @@ export function GameProvider({ children }) {
 
   function setState(change) {
     const error = checkForErrors(change, state);
-    if(error) {
-      set({ ...state, error })
+    if (error) {
+      set({ ...state, error });
     } else {
       set({ ...state, ...change, error: "" });
     }
   }
 
-  function forwardKeyboardEvents(e) {
-    const input = document.getElementById('input');
-    if (e.target != input) {
-      const e2 = new KeyboardEvent(e.type, e);
-      console.log({e, e2});
-      input.focus();
-      input.dispatchEvent(e2);
-    }
-  }
-
-  document.addEventListener('keydown', forwardKeyboardEvents);
-  document.addEventListener('keyup', forwardKeyboardEvents);
-  document.addEventListener('keypress', forwardKeyboardEvents);
+  // Use on* attributes instead of addEventListener, or the handler will get
+  // re-added on each re-render of the component.
+  /*
+  document.onkeydown = forwardKeyboardEvents;
+  document.onkeyup = forwardKeyboardEvents;
+  document.onkeypress = forwardKeyboardEvents;
+  */
 
   return (
     <Game.Provider value={[state, setState]}>
