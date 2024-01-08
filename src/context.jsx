@@ -127,6 +127,9 @@ export function GameProvider({ children }) {
   function keyHandler(e) {
     const { currentGuess } = state;
 
+    // Don't let "enter" activate a button after we've typed into the doc.
+    if (document.activeElement) document.activeElement.blur();
+
     console.debug('keyHandler', e.key);
 
     if (e.key === 'Escape') {
