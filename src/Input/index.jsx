@@ -1,5 +1,5 @@
 import { useGame } from '../context';
-import { fancyJoin, checkForWin, uuid } from '../utils';
+import { joinIntoArray, checkForWin, uuid } from '../utils';
 
 function WhiteSpan() {
   return <span className="join" key={uuid()}> - </span>;
@@ -10,7 +10,7 @@ function Guesses() {
   const { existingWords } = state;
 
   const content = existingWords.length > 0 ?
-    fancyJoin(existingWords, <WhiteSpan/>) : <br />;
+      joinIntoArray(existingWords, <WhiteSpan/>) : <br />;
 
   return (
     <div className="guesses">

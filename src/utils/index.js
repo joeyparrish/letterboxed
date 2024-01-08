@@ -1,8 +1,8 @@
-export function fancyJoin(elements, joiner) {
+export function joinIntoArray(elements, delimiter) {
   let index = 1;
-  let array = [elements[0]];
-  while(index < elements.length) {
-    array.push(joiner);
+  const array = [elements[0]];
+  while (index < elements.length) {
+    array.push(delimiter);
     array.push(elements[index]);
     index++;
   }
@@ -10,13 +10,15 @@ export function fancyJoin(elements, joiner) {
 }
 
 export function checkForWin(existingWords) {
-  let letterSet = new Set();
-  existingWords.forEach(word => word
-    .split("").forEach(letter => letterSet.add(letter))
-  );
-  const winCondition = letterSet.size === 12;
+  const letterSet = new Set();
 
-  return winCondition;
+  for (const word of existingWords) {
+    for (const letter of word) {
+      letterSet.add(letter);
+    }
+  }
+
+  return letterSet.size === 12;
 }
 
 // this is not actual, real uuid, mostly to get around the react key warning
