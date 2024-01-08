@@ -77,7 +77,7 @@ export default function Buttons() {
   );
 
   return (
-    <div id="buttonRow">
+    <div id="buttonRow" className="fill">
       {restartButton}
       {deleteButton}
       {submitButton}

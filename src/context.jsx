@@ -120,15 +120,25 @@ export function GameProvider({ children }) {
 
     console.debug('keyHandler', e.key);
 
+    if (e.key === 'Escape') {
+      // close all modals
+      return setState({
+        help: false,
+        won: false,
+      });
+    }
+
+    // Ignore all other keys while modals are showing.
+    if (state.help || state.won) {
+      return;
+    }
+
     if (e.key === 'Backspace') {
       return deleteLetter(state, setState);
     } else if (e.key === 'Enter') {
       return submit(state, setState);
     } else if (e.key === '?') {
       return setState({ help: true });
-    } else if (e.key === 'Escape') {
-      // close all modals
-      return setState({ help: false });
     } else if (e.key === '.') {
       // Off by default, uncomment to enable debugging in your deployment
       /*

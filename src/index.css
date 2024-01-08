@@ -34,6 +34,9 @@ span.join {
   display: flex;
   text-align: center;
   justify-content: center;
+}
+
+.fill {
   width: 100%;
 }
 
@@ -102,10 +105,6 @@ span.join {
   font-weight: bold;
 }
 
-#input {
-  width: 100%;
-}
-
 #currentGuess {
   background-color: var(--background-color);
   border: none;
@@ -113,7 +112,6 @@ span.join {
   font-size: 8svmin;
   font-weight: bolder;
   outline: none;
-  width: 100%;
   text-align: center;
   padding: 0;
   height: 1.5em;
@@ -148,10 +146,13 @@ span.join {
   border: none;
 }
 
+.modal h1 {
+  font-size: 8svmin;
+}
+
 #buttonRow {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
   max-width: 500px;
   justify-content: center;
   gap: 1em;
@@ -185,4 +186,18 @@ span.join {
 
 #helpModal ul {
   padding-inline-start: 1em;
+}
+
+#wonModal {
+  padding: 2em;
+  top: 9em;
+}
+
+#wonModal h1 {
+  text-align: center;
+}
+
+.bigIcon {
+  text-align: center;
+  font-size: 20svmin;
 }

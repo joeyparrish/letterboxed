@@ -2,23 +2,24 @@ import Input from "./Input";
 import Box from "./Box";
 import Buttons from "./Buttons";
 import Modal from "./Modal";
+import Won from "./Won";
 import { GameProvider } from './context';
 import reference from './assets/reference.svg';
 
-function App() {
+export default function App() {
   return (
     <GameProvider>
-      <div className="row">
+      <div className="row fill">
         <Input />
       </div>
-      <div className="row">
+      <div className="row fill">
         <Box />
       </div>
-      <div className="row">
+      <div className="row fill">
         <Buttons />
       </div>
       <Modal id="helpModal" stateName="help">
-        <h3>How To Play</h3>
+        <h1>How To Play</h1>
 
         <p>Create words using letters around the square</p>
 
@@ -37,8 +38,9 @@ function App() {
         <p>New puzzles are released at 3 a.m. EST.</p>
         <p>The original game can be found <a href="https://www.nytimes.com/puzzles/letter-boxed">here</a>.</p>
       </Modal>
+      <Modal id="wonModal" stateName="won">
+        <Won />
+      </Modal>
     </GameProvider>
   );
 }
-
-export default App;

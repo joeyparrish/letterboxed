@@ -1,5 +1,5 @@
 import { useGame } from '../context';
-import { joinIntoArray, checkForWin, uuid } from '../utils';
+import { joinIntoArray, uuid } from '../utils';
 
 function WhiteSpan() {
   return <span className="join" key={uuid()}> - </span>;
@@ -24,7 +24,7 @@ export default function Input() {
   const { currentGuess } = state;
 
   return (
-    <div id="input">
+    <div id="input" className="fill">
       <div id="currentGuess">{currentGuess}</div>
       <Guesses />
     </div>
