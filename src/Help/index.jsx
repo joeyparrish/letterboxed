@@ -7,7 +7,7 @@ export default function Help() {
 
       <p>Create words using letters around the square</p>
 
-      <img src={reference} alt="example game" />
+      <img id="example-game" src={reference} alt="example game" />
 
       <ul>
         <li>Connect letters to spell words</li>

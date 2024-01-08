@@ -12,12 +12,12 @@ export default function App() {
       <div className="row fill">
         <Input />
       </div>
+
       <div className="row fill">
         <Box />
-      </div>
-      <div className="row fill">
         <Buttons />
       </div>
+
       <Modal id="helpModal" stateName="help">
         <Help />
       </Modal>

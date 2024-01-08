@@ -9,6 +9,7 @@ body {
   background-color: var(--background-color);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  font-size: 4svmin;
 }
 
 #container {
@@ -34,6 +35,7 @@ span.join {
   display: flex;
   text-align: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .fill {
@@ -42,8 +44,7 @@ span.join {
 
 #letter-box {
   margin: auto;
-  width: 100svmin;
-  height: 100svmin;
+  max-height: 70svh;
 }
 
 #letter-box path, #letter-box circle, #letter-box rect {
@@ -156,11 +157,12 @@ span.join {
   max-width: 500px;
   justify-content: center;
   gap: 1em;
+  margin: auto;
   margin-top: 2em;
 }
 
 #buttonRow button {
-  font-size: 4svmin;
+  font-size: calc(min(max(4svmin, 16px), 20px));
   color: black;
   background-color: var(--background-color);
   border: calc(max(0.1em, 1px)) solid black;
@@ -176,16 +178,33 @@ span.join {
   width: 2em;
   height: 2em;
   margin-top: 0.5em;
+}
 
-  @media only screen and (max-width: 650px) {
-    /* On small screens, put it where it would naturally go in the flow. */
+@media only screen and (max-width: 650px) {
+  /* On small screens, put the help button where it would naturally go in the
+   * flow. */
+  #buttonRow #helpButton {
     position: relative;
     right: auto;
   }
 }
 
+@media only screen and (max-width: 350px) {
+  /* On even smaller screens, put each button in their own row. */
+  #buttonRow {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 #helpModal ul {
   padding-inline-start: 1em;
+}
+
+#helpModal #example-game {
+  max-height: 40svh;
+  margin: auto;
+  display: block;
 }
 
 #wonModal {
@@ -194,6 +213,10 @@ span.join {
 }
 
 #wonModal h1 {
+  text-align: center;
+}
+
+#wonModal p {
   text-align: center;
 }
 
@@ -244,4 +267,35 @@ span.join {
 
   padding: 0.5em 1.5em;
   font-size: 4svmin;
+}
+
+#small-screen-error {
+  display: none;
+  padding: 0 1em;
+}
+
+@media only screen and (orientation: landscape) and (max-height: 500px) {
+  #small-screen-error {
+    display: block;
+    text-align: center;
+    font-size: 10svmin;
+  }
+  #container {
+    display: none;
+  }
+}
+
+/* Layout changes for large desktop screens */
+@media only screen and (orientation: landscape) and (min-width: 650px) {
+  #container {
+    /* Place input and game board side-by-side. */
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2em;
+    padding: 2em 3.5em;
+  }
+
+  #wonModal {
+    top: 4em;
+  }
 }
