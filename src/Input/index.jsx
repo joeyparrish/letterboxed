@@ -6,15 +6,21 @@ function WhiteSpan() {
 }
 
 function Guesses() {
-  const [ state ] = useGame();
-  const { existingWords } = state;
+  const [ state, setState ] = useGame();
+  const { existingWords, error } = state;
 
   const content = existingWords.length > 0 ?
       joinIntoArray(existingWords, WhiteSpan) : <br />;
 
+  const errorClass = error ? 'active' : '';
+
   return (
-    <div className="guesses">
+    <div className="guesses overlay-host">
       { content }
+      <div id="errorOverlay" className={errorClass}
+           onAnimationEnd={() => setState({error: ""})}>
+        <div id="errorMessage">{ error }</div>
+      </div>
     </div>
   );
 }

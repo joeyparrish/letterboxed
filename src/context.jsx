@@ -64,19 +64,22 @@ export const useGame = () => useContext(Game);
 function checkForErrors(change, state) {
   if (change.intent === "guess") {
     if (!/^[a-zA-Z]+$/.test(change.currentGuess) && change.currentGuess !== "") {
-      return "guesses must be letters only";
+      // Silent error.
+      return true;
     }
 
     const lastLetter = change.currentGuess[change.currentGuess.length - 1];
 
     // this letter doesn't exist
     if (!state.letterMap[lastLetter] && change.currentGuess.length > 0) {
-      return "no such letter on the board";
+      // Silent error.
+      return true;
     }
 
     // Typing or removing the first letter of the game cannot
     // produce an invalid path
     if (change.currentGuess.length <= 1) {
+      // No error.
       return false;
     }
 
@@ -87,19 +90,21 @@ function checkForErrors(change, state) {
     const [,, group1] = state.letterMap[secondToLastLetter];
     const [,, group2] = state.letterMap[lastLetter];
     if (group1 == group2) {
-      return "consecutive letters must be on different sides";
+      // Silent error.
+      return true;
     }
   }
 
   if (change.intent === "submit") {
     if (state.currentGuess.length < 3) {
-      return "guess must be 3 letters or more";
+      return "Too short";
     }
     if (!dictionary.has(state.currentGuess) && state.__debug === false) {
-      return `${state.currentGuess} is not a recognized word`;
+      return "Not a word";
     }
   }
 
+  // No error.
   return false;
 }
 
@@ -108,9 +113,13 @@ export function GameProvider({ children }) {
 
   function setState(change) {
     const error = checkForErrors(change, state);
-    if (error) {
+    if (error === true) {
+      // silent error, ignoring some input
+    } else if (error) {
+      // error message shown
       set({ ...state, error });
     } else {
+      // good input, make changes, clear any error
       set({ ...state, ...change, error: "" });
     }
   }

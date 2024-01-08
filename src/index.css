@@ -201,3 +201,47 @@ span.join {
   text-align: center;
   font-size: 20svmin;
 }
+
+.overlay-host {
+  position: relative;
+}
+
+#errorOverlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+}
+
+#errorOverlay.active {
+  animation: fadeInAndOut 2s;
+}
+
+@keyframes fadeInAndOut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+#errorMessage {
+  display: inline-block;
+  margin: auto;
+
+  background: black;
+  color: white;
+
+  padding: 0.5em 1.5em;
+  font-size: 4svmin;
+}
