@@ -19,7 +19,7 @@ export default function Help() {
         <li>Use all letters to win!</li>
       </ul>
 
-      <p>New puzzles are released at 3 a.m. EST.</p>
+      <p>New puzzles are released at 4 a.m. EST.</p>
       <p>The original game can be found <a href="https://www.nytimes.com/puzzles/letter-boxed">here</a>.</p>
     </div>
   );

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "scrape": "node scrape.js",
-    "dev": "node scrape.js && rspack serve",
+    "dev": "rspack serve",
     "build": "node scrape.js && rspack build"
   },
   "dependencies": {
