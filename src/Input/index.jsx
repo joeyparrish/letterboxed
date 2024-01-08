@@ -10,7 +10,7 @@ function Guesses() {
   const { existingWords } = state;
 
   const content = existingWords.length > 0 ?
-      joinIntoArray(existingWords, <WhiteSpan/>) : <br />;
+      joinIntoArray(existingWords, WhiteSpan) : <br />;
 
   return (
     <div className="guesses">

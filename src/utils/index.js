@@ -1,8 +1,10 @@
-export function joinIntoArray(elements, delimiter) {
+// Delimiter should be a callback, so that each one can be an element with a
+// unique ID.
+export function joinIntoArray(elements, delimiterCallback) {
   let index = 1;
   const array = [elements[0]];
   while (index < elements.length) {
-    array.push(delimiter);
+    array.push(delimiterCallback());
     array.push(elements[index]);
     index++;
   }
