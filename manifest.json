@@ -4,6 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#faa6a4",
+  "theme_color": "#faa6a4",
   "description": "A clone of the NYT game Letterboxed",
   "icons": [
     {
