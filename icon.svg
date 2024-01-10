@@ -2,7 +2,7 @@
   <g stroke-width="15">
     <rect x="100" y="100" width="400" height="400"
           fill="rgba(255,255,255)" stroke="black" />
-    <g stroke="#faa6a4" stroke-dasharray="4% 4%">
+    <g stroke="red" stroke-dasharray="4% 4%">
       <path d="M 500 425 L 100 300 Z" />
       <path d="M 100 300 L 500 175 Z" />
       <path d="M 500 175 L 300 500 Z" />
@@ -10,17 +10,17 @@
       <path d="M 175 100 L 500 425 Z" />
     </g>
     <g fill="white" stroke="black">
-      <circle cx="175" cy="100" r="12" stroke="#faa6a4" />
+      <circle cx="175" cy="100" r="12" stroke="#red" />
       <circle cx="300" cy="100" r="12" />
       <circle cx="425" cy="100" r="12" />
       <circle cx="100" cy="175" r="12" />
-      <circle cx="100" cy="300" r="12" stroke="#faa6a4" />
+      <circle cx="100" cy="300" r="12" stroke="#red" />
       <circle cx="100" cy="425" r="12" />
-      <circle cx="500" cy="175" r="12" stroke="#faa6a4" />
+      <circle cx="500" cy="175" r="12" stroke="#red" />
       <circle cx="500" cy="300" r="12" />
-      <circle cx="500" cy="425" r="12" stroke="#faa6a4" fill="black" />
+      <circle cx="500" cy="425" r="12" stroke="#red" fill="black" />
       <circle cx="175" cy="500" r="12" />
-      <circle cx="300" cy="500" r="12" stroke="#faa6a4" />
+      <circle cx="300" cy="500" r="12" stroke="#red" />
       <circle cx="425" cy="500" r="12" />
     </g>
   </g>
