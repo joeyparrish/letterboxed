@@ -121,7 +121,6 @@ span.join {
 .modal {
   position: absolute;
   top: 0;
-  overflow: scroll;
   background: var(--modal-color);
   padding: 1em;
   margin: 0.5em;

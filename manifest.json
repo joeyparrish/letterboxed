@@ -1,0 +1,15 @@
+{
+  "name": "Letterboxed Clone",
+  "short_name": "Letterboxed",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#faa6a4",
+  "description": "A clone of the NYT game Letterboxed",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
