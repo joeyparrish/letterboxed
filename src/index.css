@@ -63,7 +63,13 @@ span.join {
 #letter-box path.active {
   stroke: var(--background-color);
   stroke-dasharray: 4% 4%;
-  /* FIXME: should cover a past path with white */
+}
+
+/* Underlay for each active path to make sure the white parts of the dashed
+ * line are white and not transparent: */
+#letter-box path.active.under {
+  stroke: white;
+  stroke-dasharray: none;
 }
 
 #letter-box path.past {

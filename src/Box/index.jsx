@@ -13,7 +13,7 @@ export default function Box() {
         y= "100"
         width="400"
         height="400"
-        fill="rgba(255,255,255)"
+        fill="white"
         stroke="black"/>
 
       <Paths />

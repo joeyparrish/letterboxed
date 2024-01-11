@@ -1,7 +1,7 @@
 <svg id="letter-box" xmlns="http://www.w3.org/2000/svg" viewBox="75 75 450 450">
   <g stroke-width="15">
     <rect x="100" y="100" width="400" height="400"
-          fill="rgba(255,255,255)" stroke="black" />
+          fill="white" stroke="black" />
     <g stroke="red" stroke-dasharray="4% 4%">
       <path d="M 500 425 L 100 300 Z" />
       <path d="M 100 300 L 500 175 Z" />
