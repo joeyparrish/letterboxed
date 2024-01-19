@@ -1,22 +1,23 @@
 {
-  "name": "rspack-react-ts-starter",
+  "name": "letterboxed-clone",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "scrape": "node scrape.js",
     "dev": "rspack serve",
-    "build": "node scrape.js && rspack build && cp icon.svg manifest.json dist/"
+    "build": "node scrape.js && rspack build && cp icon.svg manifest.json dist/ && node build-service-worker.js"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@rspack/cli": "latest",
-    "@types/react": "18.2.0",
-    "@types/react-dom": "18.2.1",
+    "@rspack/cli": "^0.3.5",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.1",
     "safe-eval": "^0.4.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "workbox-build": "^7.0.0"
   },
   "comment-engines": "fetch() requires node 18+, used to scrape NYT",
   "engines": {
