@@ -22,9 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Generated sources
-public/service-worker.js
-public/service-worker.js.map
-public/workbox-*.js
-public/workbox-*.js.map

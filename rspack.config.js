@@ -16,8 +16,6 @@ module.exports = {
       patterns: [
         { from: 'icon.svg', context: 'public' },
         { from: 'manifest.json', context: 'public' },
-        { from: 'service-worker*', context: 'public' },
-        { from: 'workbox*', context: 'public' },
         // So arcane, but if we don't specify a "to", it unpacks the folder.
         { from: 'puzzle-sources', context: 'public', to: 'puzzle-sources' },
       ],
