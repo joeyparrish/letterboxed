@@ -5,7 +5,7 @@
   "scripts": {
     "scrape": "node scrape.js",
     "dev": "rspack serve",
-    "build": "node scrape.js && rspack build && cp icon.svg manifest.json dist/ && node build-service-worker.js"
+    "build": "node build-service-worker.js && rspack build"
   },
   "dependencies": {
     "react": "^18.2.0",

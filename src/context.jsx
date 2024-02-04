@@ -1,7 +1,7 @@
-import { createContext, useState, useContext } from 'react';
-import { letters } from './utils/letters';
-import { dictionary } from './utils/dictionary';
+import { createContext, useEffect, useContext, useState } from 'react';
 import { deleteLetter, submit } from './Buttons';
+import { loadStandardGameData } from './utils';
+import archiveDates from '../public/puzzle-sources/standard/archive.json';
 
 const circleCoordinates = [
   // top
@@ -34,10 +34,12 @@ const baseGame = {
   error: "",
   // last intended user action
   intent: "",
-  // list of letters
-  letters,
+  // dictionary of valid words
+  dictionary: new Set(),
+  // list of sides, each of which is a list of letters
+  letters: [],
   // generated location map of the letters
-  letterMap: generateMap(letters),
+  letterMap: {},
   // did the player win?
   won: false,
   // showing help menu
@@ -99,7 +101,7 @@ function checkForErrors(change, state) {
     if (state.currentGuess.length < 3) {
       return "Too short";
     }
-    if (!dictionary.has(state.currentGuess) && state.__debug === false) {
+    if (!state.dictionary.has(state.currentGuess) && state.__debug === false) {
       return "Not a word";
     }
   }
@@ -108,8 +110,34 @@ function checkForErrors(change, state) {
   return false;
 }
 
+async function loadGameData(setState) {
+  const mostRecentDate = archiveDates[archiveDates.length - 1];
+
+  let gameData;
+  try {
+    gameData = await loadStandardGameData(new Date(mostRecentDate));
+  } catch (error) {
+    setState({hardError: 'Failed to load game data!'});
+    return;
+  }
+
+  // Reorder the NYT sides into the order expected here.
+  const letters = [
+    gameData.sides[0].split(''),
+    gameData.sides[3].split(''),
+    gameData.sides[1].split(''),
+    gameData.sides[2].split(''),
+  ];
+
+  setState({
+    letters,
+    letterMap: generateMap(letters),
+    dictionary: new Set(gameData.dictionary),
+  });
+}
+
 export function GameProvider({ children }) {
-  const [state, set] = useState(baseGame);
+  const [state, setStateRaw] = useState(baseGame);
 
   function setState(change) {
     const error = checkForErrors(change, state);
@@ -117,10 +145,10 @@ export function GameProvider({ children }) {
       // silent error, ignoring some input
     } else if (error) {
       // error message shown
-      set({ ...state, error });
+      setStateRaw({ ...state, error });
     } else {
       // good input, make changes, clear any error
-      set({ ...state, ...change, error: "" });
+      setStateRaw({ ...state, ...change, error: "" });
     }
   }
 
@@ -166,6 +194,15 @@ export function GameProvider({ children }) {
       });
     }
   }
+
+  useEffect(() => {
+    if (state.letters.length || state.hardError) {
+      // We already tried to load.
+      return;
+    }
+
+    loadGameData(setState);
+  });
 
   // Use on* attributes instead of addEventListener, or the handler will get
   // re-added on each re-render of the component.

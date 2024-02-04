@@ -27,3 +27,14 @@ export function checkForWin(existingWords) {
 export function uuid() {
   return Math.random().toString(36).substring(2, 15);
 }
+
+export async function loadStandardGameData(date) {
+  const isoDate = date.toISOString().split('T')[0];
+  const request = await fetch(`puzzle-sources/standard/${isoDate}.json`);
+  if (!request.ok) {
+    throw new Error('Request for game data failed!');
+  }
+
+  const gameData = await request.json();
+  return gameData;
+}

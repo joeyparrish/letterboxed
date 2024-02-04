@@ -23,6 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Generated sources, scraped from NYT:
-src/utils/dictionary.js
-src/utils/letters.js
+# Generated sources
+public/service-worker.js
+public/service-worker.js.map
+public/workbox-*.js
+public/workbox-*.js.map

@@ -1,0 +1,41 @@
+name: Update Standard Puzzles
+
+on:
+  # Runs on a schedule to update the puzzle daily
+  schedule:
+    # 3:30 am PST is 11:30 am UTC
+    - cron: '30 11 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow only one concurrent run
+concurrency:
+  group: update
+  cancel-in-progress: true
+
+jobs:
+  update:
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update puzzles
+        run: |
+          npm ci
+          npm run scrape
+
+      - name: Push to repo
+        run: |
+          # If there are differences:
+          if ! git diff --exit-code >/dev/null; then
+            git config --global user.name "Letterboxed CI"
+            git config --global user.email "letterboxed-ci-bot@users.noreply.github.com"
+            git add public/puzzle-sources/standard
+            git commit -a -m "Add puzzle from $(date +%Y-%m-%d)"
+            git push
+          fi

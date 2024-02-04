@@ -26,6 +26,11 @@ function Letter({ letter, x, y }) {
 }
 
 function Set({ letters, placement}) {
+  if (!letters) {
+    // Not loaded yet.
+    return;
+  }
+
   if(placement === "top") {
     return letters.map((letter, i) => (
         <Letter

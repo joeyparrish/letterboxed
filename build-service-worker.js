@@ -3,10 +3,10 @@
 (async () => {
   const {generateSW} = require('workbox-build');
   const {count, size, warnings} = await generateSW({
-    globDirectory: 'dist/',
+    globDirectory: 'public/',
     globPatterns: ['!(*.map)'],
     skipWaiting: true,
-    swDest: 'dist/service-worker.js',
+    swDest: 'public/service-worker.js',
   });
 
   if (warnings.length > 0) {

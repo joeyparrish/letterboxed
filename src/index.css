@@ -241,6 +241,11 @@ span.join {
   opacity: 0;
 }
 
+#errorOverlay.fatal {
+  opacity: 1;
+  animation: none !important;
+}
+
 #errorOverlay.active {
   animation: fadeInAndOut 2s;
 }

@@ -14,32 +14,18 @@ async function scrape() {
 
   const gameData = safeEval(match[1]);
 
-  // Write the dictionary. Note that the NYT game data's dictionary only
+  // Write the entire game data.  Note that the NYT game data's dictionary only
   // contains words that are possible with today's letters.
-  gameData.dictionary.sort();
-  const dictionaryCode =
-      'export const dictionary = new Set(' +
-      JSON.stringify(gameData.dictionary, null, '  ') +
-      ');';
-  fs.writeFileSync('src/utils/dictionary.js', dictionaryCode);
+  fs.writeFileSync(`public/puzzle-sources/standard/${gameData.printDate}.json`,
+      JSON.stringify(gameData, null, 2) + '\n');
 
-  // Write the letters, in the format and order expected by the original clone
-  // from SivanMehta.
-  const sides = [
-    gameData.sides[0].split(''),
-    gameData.sides[3].split(''),
-    gameData.sides[1].split(''),
-    gameData.sides[2].split(''),
-  ];
-  const lettersCode =
-      'export const letters = ' +
-      JSON.stringify(sides, null, '  ') +
-      ';';
-  fs.writeFileSync('src/utils/letters.js', lettersCode);
-
-  // Uncomment to see the data:
-  //delete gameData.dictionary;
-  //console.log(JSON.stringify(gameData, null, '  '));
+  const archivedDates = require(
+      './public/puzzle-sources/standard/archive.json');
+  if (!archivedDates.includes(gameData.printDate)) {
+    archivedDates.push(gameData.printDate);
+  }
+  fs.writeFileSync(`public/puzzle-sources/standard/archive.json`,
+      JSON.stringify(archivedDates, null, 2) + '\n');
 }
 
 scrape();
