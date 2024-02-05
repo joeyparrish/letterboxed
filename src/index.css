@@ -289,6 +289,7 @@ span.join {
 
   top: 0;
   height: 100%;
+  box-sizing: border-box; /* Include border in 100% height */
   padding: 1em;
   border: 3px black ridge;
   background-color: white;
