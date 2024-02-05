@@ -1,4 +1,5 @@
 import Archive from "./Archive";
+import ErrorPage from "./ErrorPage";
 import Input from "./Input";
 import Box from "./Box";
 import Buttons from "./Buttons";
@@ -6,7 +7,7 @@ import Help from "./Help";
 import Menu from "./Menu";
 import Modal from "./Modal";
 import Won from "./Won";
-import { GameProvider } from './context';
+import { GameProvider, loadGameData } from './context';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 function Game() {
@@ -34,6 +35,13 @@ function Game() {
 const router = createHashRouter([
   {
     path: "",
+    element: <Game />,
+    loader: loadGameData,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "standard/:date",
+    loader: loadGameData,
     element: <Game />,
   },
   {

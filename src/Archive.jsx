@@ -5,7 +5,7 @@ function PuzzleList() {
   for (const date of archiveDates) {
     const dateLink = `#standard/${date}`;
     list.push(
-        <li><a href={dateLink}>{date}</a></li>
+        <li key={date}><a href={dateLink}>{date}</a></li>
     );
   }
   return list;

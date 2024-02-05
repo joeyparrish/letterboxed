@@ -1,4 +1,5 @@
 import { createContext, useEffect, useContext, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { deleteLetter, submit } from './Buttons';
 import { loadStandardGameData } from './utils';
 import archiveDates from '../public/puzzle-sources/standard/archive.json';
@@ -110,15 +111,22 @@ function checkForErrors(change, state) {
   return false;
 }
 
-async function loadGameData(setState) {
-  const mostRecentDate = archiveDates[archiveDates.length - 1];
+export async function loadGameData({params}) {
+  // Default to the most recent date.
+  const date = params.date || archiveDates[archiveDates.length - 1];
 
   let gameData;
   try {
-    gameData = await loadStandardGameData(new Date(mostRecentDate));
+    gameData = await loadStandardGameData(new Date(date));
   } catch (error) {
-    setState({hardError: 'Failed to load game data!'});
-    return;
+    console.error(error);
+    return {
+      hardError: `Failed to load game data for ${date}!`,
+      // Clear any previous game state:
+      letters: [],
+      letterMap: {},
+      dictionary: new Set(),
+    };
   }
 
   // Reorder the NYT sides into the order expected here.
@@ -129,11 +137,12 @@ async function loadGameData(setState) {
     gameData.sides[2].split(''),
   ];
 
-  setState({
+  return {
+    hardError: '',  // Clear any previous errors.
     letters,
     letterMap: generateMap(letters),
     dictionary: new Set(gameData.dictionary),
-  });
+  };
 }
 
 export function GameProvider({ children }) {
@@ -151,6 +160,16 @@ export function GameProvider({ children }) {
       setStateRaw({ ...state, ...change, error: "" });
     }
   }
+
+  const gameData = useLoaderData();
+
+  // Set state, but only when gameData changes, rather than on every state
+  // change.
+  useEffect(() => {
+    setState(gameData);
+  }, [
+    gameData,
+  ]);
 
   function keyHandler(e) {
     const { currentGuess } = state;
@@ -194,15 +213,6 @@ export function GameProvider({ children }) {
       });
     }
   }
-
-  useEffect(() => {
-    if (state.letters.length || state.hardError) {
-      // We already tried to load.
-      return;
-    }
-
-    loadGameData(setState);
-  });
 
   // Use on* attributes instead of addEventListener, or the handler will get
   // re-added on each re-render of the component.
