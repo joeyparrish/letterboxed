@@ -7,7 +7,7 @@ import Help from "./Help";
 import Menu from "./Menu";
 import Modal from "./Modal";
 import Won from "./Won";
-import { GameProvider, loadGameData } from './context';
+import { GameProvider, gameDataLoaderFactory } from './context';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 function Game() {
@@ -36,12 +36,17 @@ const router = createHashRouter([
   {
     path: "",
     element: <Game />,
-    loader: loadGameData,
+    loader: gameDataLoaderFactory('standard'),
     errorElement: <ErrorPage />,
   },
   {
     path: "standard/:date",
-    loader: loadGameData,
+    loader: gameDataLoaderFactory('standard'),
+    element: <Game />,
+  },
+  {
+    path: "poetry",
+    loader: gameDataLoaderFactory('poetry'),
     element: <Game />,
   },
   {

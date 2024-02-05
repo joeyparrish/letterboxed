@@ -1,30 +1,7 @@
 import { createContext, useEffect, useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { deleteLetter, submit } from './Buttons';
-import { loadStandardGameData } from './utils';
-import archiveDates from '../public/puzzle-sources/standard/archive.json';
-
-const circleCoordinates = [
-  // top
-  [175, 100],
-  [300, 100],
-  [425, 100],
-
-  // left
-  [100, 175],
-  [100, 300],
-  [100, 425],
-
-  // right
-  [500, 175],
-  [500, 300],
-  [500, 425],
-
-  // bottom
-  [175, 500],
-  [300, 500],
-  [425, 500],
-];
+import { loadStandardGameData, loadPoetryGameData } from './utils';
 
 const baseGame = {
   // current guess
@@ -49,17 +26,6 @@ const baseGame = {
   // debug mode
   __debug: false,
 };
-
-function generateMap(letterList) {
-  const map = {};
-  letterList.forEach((row, i) => {
-    row.forEach((letter, j) => {
-      // store the coordinates and group in which the letter is located
-      map[letter] = [...circleCoordinates[i * 3 +  j], i];
-    });
-  });
-  return map;
-}
 
 const Game = createContext(baseGame);
 export const useGame = () => useContext(Game);
@@ -111,38 +77,12 @@ function checkForErrors(change, state) {
   return false;
 }
 
-export async function loadGameData({params}) {
-  // Default to the most recent date.
-  const date = params.date || archiveDates[archiveDates.length - 1];
-
-  let gameData;
-  try {
-    gameData = await loadStandardGameData(new Date(date));
-  } catch (error) {
-    console.error(error);
-    return {
-      hardError: `Failed to load game data for ${date}!`,
-      // Clear any previous game state:
-      letters: [],
-      letterMap: {},
-      dictionary: new Set(),
-    };
+export function gameDataLoaderFactory(type) {
+  if (type == 'standard') {
+    return ({params}) => loadStandardGameData(params.date);
+  } else if (type == 'poetry') {
+    return ({params}) => loadPoetryGameData();
   }
-
-  // Reorder the NYT sides into the order expected here.
-  const letters = [
-    gameData.sides[0].split(''),
-    gameData.sides[3].split(''),
-    gameData.sides[1].split(''),
-    gameData.sides[2].split(''),
-  ];
-
-  return {
-    hardError: '',  // Clear any previous errors.
-    letters,
-    letterMap: generateMap(letters),
-    dictionary: new Set(gameData.dictionary),
-  };
 }
 
 export function GameProvider({ children }) {

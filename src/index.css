@@ -294,7 +294,7 @@ span.join {
   border: 3px black ridge;
   background-color: white;
 
-  left: -10em;
+  left: -15em;
   transition: left 0.5s ease-in;
   overflow: hidden;
 }

@@ -14,7 +14,8 @@ export default function Menu() {
       </div>
       <div id="menuItems">
         <ul>
-          <li><a onClick={toggleMenu} href="#">Latest</a></li>
+          <li><a onClick={toggleMenu} href="#">Latest Puzzle</a></li>
+          <li><a onClick={toggleMenu} href="#poetry">Poetic Puzzle</a></li>
           <li><a onClick={toggleMenu} href="#archive">Archive</a></li>
         </ul>
       </div>

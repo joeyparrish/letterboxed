@@ -4,7 +4,10 @@
   const {generateSW} = require('workbox-build');
   const {count, size, warnings} = await generateSW({
     globDirectory: 'dist/',
-    globPatterns: ['!(*.map)', 'puzzle-sources/*/*'],
+    globPatterns: [
+      '!(*.map)',
+      'puzzle-sources/**/*',
+    ],
     skipWaiting: true,
     swDest: 'dist/service-worker.js',
   });
