@@ -1,4 +1,4 @@
-import { useGame } from '../context';
+import { useGame } from './context';
 
 export default function Modal({ id, stateName, children }) {
   const [ state, setState ] = useGame();

@@ -1,4 +1,4 @@
-import reference from '../assets/reference.svg';
+import reference from './assets/reference.svg';
 
 export default function Help() {
   return (

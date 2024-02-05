@@ -1,4 +1,4 @@
-import { useGame } from '../context';
+import { useGame } from './context';
 
 export default function Won() {
   const [state, setState] = useGame();

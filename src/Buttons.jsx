@@ -1,5 +1,5 @@
-import { useGame } from '../context';                                            
-import { checkForWin } from '../utils';
+import { useGame } from './context';
+import { checkForWin } from './utils';
 
 function fakeKeyDown(metadata) {
   const event = new KeyboardEvent('keydown', metadata);

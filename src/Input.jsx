@@ -1,5 +1,5 @@
-import { useGame } from '../context';
-import { joinIntoArray, uuid } from '../utils';
+import { useGame } from './context';
+import { joinIntoArray, uuid } from './utils';
 
 function WhiteSpan() {
   return <span className="join" key={uuid()}> - </span>;
