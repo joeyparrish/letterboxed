@@ -52,9 +52,9 @@ const router = createHashRouter([
 
 export default function App() {
   return (
-    <div>
+    <>
       <Menu />
       <RouterProvider router={router} />
-    </div>
+    </>
   );
 }
