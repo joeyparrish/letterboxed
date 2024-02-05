@@ -1,3 +1,4 @@
+import Archive from "./Archive";
 import Input from "./Input";
 import Box from "./Box";
 import Buttons from "./Buttons";
@@ -27,12 +28,6 @@ function Game() {
         <Won />
       </Modal>
     </GameProvider>
-  );
-}
-
-function Archive() {
-  return (
-    <div>Archive</div>
   );
 }
 

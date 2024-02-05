@@ -323,12 +323,12 @@ span.join {
   line-height: 1.5;
 }
 
-#menuItems a {
+a {
   color: black;
   text-decoration: none;
 }
 
-#menuItems a:hover {
+a:hover {
   color: dimgray;
 }
 
