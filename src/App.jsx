@@ -2,11 +2,13 @@ import Input from "./Input";
 import Box from "./Box";
 import Buttons from "./Buttons";
 import Help from "./Help";
+import Menu from "./Menu";
 import Modal from "./Modal";
 import Won from "./Won";
 import { GameProvider } from './context';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
-export default function App() {
+function Game() {
   return (
     <GameProvider>
       <div className="row fill">
@@ -25,5 +27,31 @@ export default function App() {
         <Won />
       </Modal>
     </GameProvider>
+  );
+}
+
+function Archive() {
+  return (
+    <div>Archive</div>
+  );
+}
+
+const router = createHashRouter([
+  {
+    path: "",
+    element: <Game />,
+  },
+  {
+    path: "archive",
+    element: <Archive />,
+  },
+]);
+
+export default function App() {
+  return (
+    <div>
+      <Menu />
+      <RouterProvider router={router} />
+    </div>
   );
 }
