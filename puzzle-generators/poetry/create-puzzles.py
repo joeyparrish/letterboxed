@@ -48,7 +48,7 @@ def make_sides(order):
 def valid_order(order, w1, w2, leftovers):
   if order:
     regex = make_regex(make_sides(order))
-    if not re.match(regex, w1) and re.match(regex, w2):
+    if not (re.match(regex, w1) and re.match(regex, w2)):
       return False
 
   if not leftovers:
