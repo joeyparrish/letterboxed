@@ -42,10 +42,16 @@ def make_sides(order):
   ]
 
 
+orders_checked = 0
+
+
 # Check if the partial order of letters makes it possible to use the two words
 # w1 and w2.  If not, return False.  If so, return the full order.  Runs
 # recursively with backtracking.
 def valid_order(order, w1, w2, leftovers):
+  global orders_checked
+  orders_checked += 1
+
   if order:
     regex = make_regex(make_sides(order))
     if not (re.match(regex, w1) and re.match(regex, w2)):
@@ -87,6 +93,8 @@ def path_to(filename):
 
 
 def main():
+  global orders_checked
+
   # A PRNG that is completely deterministic.  If we run this tool twice, we
   # should have the same output.
   prng = random.Random(0)
@@ -128,6 +136,8 @@ def main():
           "author": author,
           "words": words,
         })
+        print("\rworks parsed so far:", len(works),
+              end="", file=sys.stderr)
       else:
         works[-1]["words"].extend(words)
 
@@ -157,9 +167,13 @@ def main():
           "words": words,
         })
         current_gid = gid
+        print("\rworks parsed so far:", len(works),
+              end="", file=sys.stderr)
       else:
         # Assuming all lines are grouped by gid, which seems to be true.
         works[-1]["words"].extend(words)
+
+  print("\n", file=sys.stderr)
 
   corpora_size = sum([ len(work["words"]) for work in works ])
   print("size of corpora:", corpora_size, file=sys.stderr)
@@ -189,7 +203,11 @@ def main():
           "source": "from " + work["title"] + " by " + work["author"],
         })
 
-  print("number of generated puzzles:", len(puzzles), file=sys.stderr)
+        print("\rpuzzles so far:", len(puzzles),
+              " orders checked:", orders_checked,
+              end="", file=sys.stderr)
+
+  print("\n", file=sys.stderr)
 
   # Mix up the puzzles in a deterministic, pseudo-random order.
   prng.shuffle(puzzles)
