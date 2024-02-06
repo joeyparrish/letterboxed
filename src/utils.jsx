@@ -120,6 +120,7 @@ export async function loadStandardGameData(date) {
     letterMap: generateMap(letters),
     dictionary: new Set(gameData.dictionary),
     title: gameData.date,
+    titleClass: "standard",
     author: gameData.editor,
     authorImage: gameData.editorImage,
   };
@@ -178,6 +179,7 @@ export async function loadPoetryGameData() {
     letterMap: generateMap(letters),
     dictionary: new Set(dictionary),
     title: puzzle.source,
+    titleClass: "poetry",
     author: gameData.editor,
     authorImage: gameData.editorImage,
   };

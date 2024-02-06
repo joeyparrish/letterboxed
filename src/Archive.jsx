@@ -13,7 +13,7 @@ function PuzzleList() {
 
 export default function Archive() {
   return (
-    <div>
+    <div id="archive">
       <h1>Puzzle Archive</h1>
       <ul>
         <PuzzleList />

@@ -17,6 +17,10 @@ h1 {
   margin: 0;
 }
 
+h1.poetry {
+  font-size: 4svmin;
+}
+
 h2 {
   font-size: 3svmin;
   margin: 0;
@@ -342,12 +346,12 @@ span.join {
   line-height: 1.5;
 }
 
-a {
+#menu a, #archive a {
   color: black;
   text-decoration: none;
 }
 
-a:hover {
+#menu a:hover, #archive a:hover {
   color: dimgray;
 }
 

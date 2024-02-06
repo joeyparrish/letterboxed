@@ -5,7 +5,7 @@ export default function Title() {
 
   return (
     <div className="fill">
-      <h1>{state.title}</h1>
+      <h1 class={state.titleClass}>{state.title}</h1>
       <h2><img class="authorImage" src={state.authorImage} /> {state.author}</h2>
     </div>
   );
