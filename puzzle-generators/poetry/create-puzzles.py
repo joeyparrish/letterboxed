@@ -182,6 +182,10 @@ def main():
   seen_solution = set()
   puzzles = []
 
+  # Deny-list these known-impossible solutions, to save time on re-runs.
+  # Each of these takes about 120 minutes (for Joey) to prove as unsolveable:
+  seen_solution.add(("UNKNOWN", "NOTWITHSTANDING"))
+
   for work in works:
     words = work["words"]
     for i in range(len(words) - 1):
