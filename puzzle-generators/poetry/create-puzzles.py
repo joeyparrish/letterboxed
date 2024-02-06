@@ -145,7 +145,7 @@ def main():
   # pre-parsed subset of the metadata from "Gutenberg, Dammit" by Allison
   # Parrish.  It only contains metadata of the sources of the Poetry Corpus,
   # and only the fields we care about.
-  with gzip.open(path_to("gutenberg-poetry-metadata.json.gz"), "rt") as f:
+  with open(path_to("gutenberg-poetry-metadata.json"), "r") as f:
     poetry_metadata = json.load(f)
 
   # Load the Gutenberg Poetry Corpus.
