@@ -12,12 +12,30 @@ body {
   font-size: 4svmin;
 }
 
+h1 {
+  font-size: 6svmin;
+  margin: 0;
+}
+
+h2 {
+  font-size: 3svmin;
+  margin: 0;
+}
+
 #container {
+  padding: 3.5em;
+}
+
+#container, #gameContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3.5em;
+}
+
+.authorImage {
+  height: 2em;
+  vertical-align: middle;
 }
 
 .guesses {
@@ -346,7 +364,7 @@ a:hover {
 
 /* Layout changes for large desktop screens */
 @media only screen and (orientation: landscape) and (min-width: 650px) {
-  #container {
+  #gameContainer {
     /* Place input and game board side-by-side. */
     flex-direction: row;
     align-items: flex-start;

@@ -20,6 +20,7 @@ export default function Help() {
       </ul>
 
       <p>New puzzles are released at 4 a.m. EST.</p>
+      <p>"Poetic puzzles" are generated from two-word phrases found in English poetry that happen to be valid Letterboxed solutions.</p>
       <p>The original game can be found <a href="https://www.nytimes.com/puzzles/letter-boxed">here</a>.</p>
     </div>
   );

@@ -18,6 +18,8 @@ const baseGame = {
   letters: [],
   // generated location map of the letters
   letterMap: {},
+  // title of the puzzle
+  title: "",
   // did the player win?
   won: false,
   // showing help menu

@@ -52,13 +52,22 @@ export function uuid() {
   return Math.random().toString(36).substring(2, 15);
 }
 
+// Empty 1x1 SVG.
+const blankImage = "data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIC8+";
+
+const blankGameState = {
+  letters: [],
+  letterMap: {},
+  dictionary: new Set(),
+  title: "",
+  author: "",
+  authorImage: blankImage,
+};
+
 function gameDataFailed(message) {
   return {
     hardError: message,
-    // Clear any previous game state:
-    letters: [],
-    letterMap: {},
-    dictionary: new Set(),
+    ...blankGameState,
   };
 }
 
@@ -110,6 +119,9 @@ export async function loadStandardGameData(date) {
     letters,
     letterMap: generateMap(letters),
     dictionary: new Set(gameData.dictionary),
+    title: gameData.date,
+    author: gameData.editor,
+    authorImage: gameData.editorImage,
   };
 }
 
@@ -165,5 +177,8 @@ export async function loadPoetryGameData() {
     letters,
     letterMap: generateMap(letters),
     dictionary: new Set(dictionary),
+    title: puzzle.source,
+    author: gameData.editor,
+    authorImage: gameData.editorImage,
   };
 }

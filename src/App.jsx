@@ -6,6 +6,7 @@ import Buttons from "./Buttons";
 import Help from "./Help";
 import Menu from "./Menu";
 import Modal from "./Modal";
+import Title from "./Title";
 import Won from "./Won";
 import { GameProvider, gameDataLoaderFactory } from './context';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
@@ -14,20 +15,25 @@ function Game() {
   return (
     <GameProvider>
       <div className="column fill">
-        <Input />
-      </div>
+        <Title />
+        <div id="gameContainer">
+          <div className="column fill">
+            <Input />
+          </div>
 
-      <div className="column fill">
-        <Box />
-        <Buttons />
-      </div>
+          <div className="column fill">
+            <Box />
+            <Buttons />
+          </div>
 
-      <Modal id="helpModal" stateName="help">
-        <Help />
-      </Modal>
-      <Modal id="wonModal" stateName="won">
-        <Won />
-      </Modal>
+          <Modal id="helpModal" stateName="help">
+            <Help />
+          </Modal>
+          <Modal id="wonModal" stateName="won">
+            <Won />
+          </Modal>
+        </div>
+      </div>
     </GameProvider>
   );
 }

@@ -65,6 +65,27 @@ def valid_order(order, w1, w2, leftovers):
   return False
 
 
+# Get all unique letters from these two words in a deterministic pseudo-random
+# order.
+def all_letters(prng, w1, w2):
+  output = []
+  # All unique letters in order by first appearance.
+  for letter in w1+w2:
+    if letter not in output:
+      output.append(letter)
+
+  # Mix up the letters so that it is less obvious from the sides what the
+  # words are.
+  prng.shuffle(output)
+
+  return output
+
+
+# Construct paths relative to this file.
+def path_to(filename):
+  return os.path.join(os.path.dirname(__file__), filename)
+
+
 def main():
   # A PRNG that is completely deterministic.  If we run this tool twice, we
   # should have the same output.
@@ -73,85 +94,105 @@ def main():
   # This is a Scrabble dictionary, pre-filtered to remove words smaller than 3
   # letters or with side-by-side repeating letters.  Only legal letterboxed words
   # remain.  The official puzzles from NYT may use a different list of words.
-  dict_path = os.path.join(
-      os.path.dirname(__file__),
-      "../../public/puzzle-sources/filtered-scrabble-dictionary.json")
-  with open(dict_path, "r") as f:
+  with open(
+      path_to("../../public/puzzle-sources/filtered-scrabble-dictionary.json"),
+      "r") as f:
     dictionary = set([ word.upper() for word in json.loads(f.read()) ])
 
   print("size of dictionary:", len(dictionary), file=sys.stderr)
 
-  words_in_order = []
+  works = []
 
   # Load all of the works of Shakespeare.
-  with gzip.open(os.path.join(
-      os.path.dirname(__file__), "complete-shakespeare.txt.gz"), "rt") as f:
+  with gzip.open(path_to("complete-shakespeare.txt.gz"), "rt") as f:
     # Trim off the Project Gutenberg header.  We leave it in the source file
     # because it states that the copyright information must be preserved in
     # copies.  But we don't want to mine solutions from the legal text.
     shakespeare = f.read()[10455:]
 
-    # Parse the text into words and normalize them.
-    words_in_order.extend([
-      word.upper() for word in re.split(r"[^a-zA-Z]+", shakespeare)
-    ])
+    # Split this into sections to identify the work we're pulling from.
+    # Between each work or act, there is a header inside "<< ... >>".
+    sections = re.split(r"<<.*?>>", shakespeare, flags=re.DOTALL)
+    for section in sections:
+      section = section.strip()
+      words = [ word.upper() for word in re.split(r"[^a-zA-Z]+", section) ]
+
+      # If a section starts with a year on its own line, it's a new work.
+      lines = re.split(r"\n+", section)
+      if re.match(r"\d+", lines[0]):
+        title = lines[1]
+        author = lines[2].replace("by ", "")
+
+        works.append({
+          "title": title.title(),  # The input data was all caps...
+          "author": author,
+          "words": words,
+        })
+      else:
+        works[-1]["words"].extend(words)
+
+  # Load metadata for the Gutenberg Poetry Corpus.  This is a filtered and
+  # pre-parsed subset of the metadata from "Gutenberg, Dammit" by Allison
+  # Parrish.  It only contains metadata of the sources of the Poetry Corpus,
+  # and only the fields we care about.
+  with gzip.open(path_to("gutenberg-poetry-metadata.json.gz"), "rt") as f:
+    poetry_metadata = json.load(f)
 
   # Load the Gutenberg Poetry Corpus.
-  with gzip.open(os.path.join(
-      os.path.dirname(__file__), "gutenberg-poetry-v001.ndjson.gz"), "rt") as f:
+  with gzip.open(path_to("gutenberg-poetry-v001.ndjson.gz"), "rt") as f:
+
+    current_gid = None
+
     # Examine each line.
     for line in f:
-      data = json.loads(line)["s"]
+      line_data = json.loads(line)
+      text = line_data["s"]
+      gid = line_data["gid"]
+      words = [ word.upper() for word in re.split(r"[^a-zA-Z]+", text) ]
 
-      # Parse the text into words and normalize them.
-      words_in_order.extend([
-        word.upper() for word in re.split(r"[^a-zA-Z]+", data)
-      ])
+      if gid != current_gid:
+        works.append({
+          "title": poetry_metadata[gid]["title"],
+          "author": poetry_metadata[gid]["author"],
+          "words": words,
+        })
+        current_gid = gid
+      else:
+        # Assuming all lines are grouped by gid, which seems to be true.
+        works[-1]["words"].extend(words)
 
-  # Create a set of all unique words in these corpora.
-  words = set(words_in_order)
+  corpora_size = sum([ len(work["words"]) for work in works ])
+  print("size of corpora:", corpora_size, file=sys.stderr)
 
-  print("size of corpora:", len(words_in_order), file=sys.stderr)
-  print("unique words in corpora:", len(words), file=sys.stderr)
-
-  # Generate a list of valid, unique Letterboxed solutions from our corpora of
-  # text.
-  solutions = []
-  solutions_set = set()
-  for i in range(len(words_in_order) - 1):
-    w1, w2 = words_in_order[i:i+2]
-    sol = (w1, w2)
-    if (sol not in solutions_set and w1 in dictionary and w2 in dictionary and
-        w1[-1] == w2[0] and count_unique_letters(w1, w2) == 12):
-      solutions.append(sol)
-      solutions_set.add(sol)
-
-  print("number of generated solutions:", len(solutions), file=sys.stderr)
-
-  # Mix up the solutions.  Remember that this PRNG is deterministic.
-  prng.shuffle(solutions)
-
+  # Generate a list of valid, unique Letterboxed puzzles from our corpora.
+  seen_solution = set()
   puzzles = []
 
-  # Generate a valid ordering of the letters in each solution.
-  for w1, w2 in solutions:
-    all_letters = []
-    # All unique letters in order by first appearance.
-    for letter in w1+w2:
-      if letter not in all_letters:
-        all_letters.append(letter)
+  for work in works:
+    words = work["words"]
+    for i in range(len(words) - 1):
+      w1, w2 = words[i:i+2]
+      sol = (w1, w2)
 
-    # Mix up the letters so that it is less obvious from the sides what the
-    # words are.
-    prng.shuffle(all_letters)
-    order = valid_order("", w1, w2, all_letters)
-    if not order:
-      raise RuntimeError("Impossible solution: " + w1 + ", " + w2)
+      if (sol not in seen_solution and w1 in dictionary and w2 in dictionary and
+          w1[-1] == w2[0] and count_unique_letters(w1, w2) == 12):
+        seen_solution.add(sol)
+        order = valid_order("", w1, w2, all_letters(prng, w1, w2))
 
-    puzzles.append({
-      "sides": make_sides(order),
-      "ourSolution": [w1, w2],
-    })
+        if not order:
+          print("Impossible solution: " + w1 + ", " + w2, file=sys.stderr)
+          continue
+
+        puzzles.append({
+          "sides": make_sides(order),
+          "ourSolution": [w1, w2],
+          "source": "from " + work["title"] + " by " + work["author"],
+        })
+
+  print("number of generated puzzles:", len(puzzles), file=sys.stderr)
+
+  # Mix up the puzzles in a deterministic, pseudo-random order.
+  prng.shuffle(puzzles)
 
   print(json.dumps({
     "puzzles": puzzles,
