@@ -173,7 +173,7 @@ def main():
         # Assuming all lines are grouped by gid, which seems to be true.
         works[-1]["words"].extend(words)
 
-  print("\n", file=sys.stderr)
+  print("", file=sys.stderr)
 
   corpora_size = sum([ len(work["words"]) for work in works ])
   print("size of corpora:", corpora_size, file=sys.stderr)
@@ -194,7 +194,7 @@ def main():
         order = valid_order("", w1, w2, all_letters(prng, w1, w2))
 
         if not order:
-          print("Impossible solution: " + w1 + ", " + w2, file=sys.stderr)
+          print("\nImpossible solution: " + w1 + ", " + w2, file=sys.stderr)
           continue
 
         puzzles.append({
@@ -207,7 +207,7 @@ def main():
               " orders checked:", orders_checked,
               end="", file=sys.stderr)
 
-  print("\n", file=sys.stderr)
+  print("", file=sys.stderr)
 
   # Mix up the puzzles in a deterministic, pseudo-random order.
   prng.shuffle(puzzles)
