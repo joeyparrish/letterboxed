@@ -31,7 +31,7 @@ span.join {
   color: var(--past-color);
 }
 
-.row {
+.column {
   display: flex;
   text-align: center;
   justify-content: center;

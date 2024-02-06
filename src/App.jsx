@@ -13,11 +13,11 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 function Game() {
   return (
     <GameProvider>
-      <div className="row fill">
+      <div className="column fill">
         <Input />
       </div>
 
-      <div className="row fill">
+      <div className="column fill">
         <Box />
         <Buttons />
       </div>
