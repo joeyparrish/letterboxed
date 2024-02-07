@@ -1,22 +1,21 @@
-export function letterClasses(letter, state) {
-  const { existingWords, currentGuess } = state;
-
-  // if the letter is the first letter of the current guess, this is a lead
-  // circle
+export function letterClasses({letter, state}) {
   const classNames = [];
 
-  const lastLetter = currentGuess[currentGuess.length - 1];
-  if (lastLetter === letter) {
+  const lastLetter = state.currentGuess[state.currentGuess.length - 1];
+
+  // If the letter is the first letter of the current guess, this is a lead
+  // circle.
+  if (letter === lastLetter) {
     classNames.push('lead');
   }
 
-  // if the letter is in the current guess, this is an active circle
-  if (currentGuess.includes(letter)) {
+  // If the letter is in the current guess, this is an active circle.
+  if (state.currentGuess.includes(letter)) {
     classNames.push('active');
   }
 
-  // if the letter is in a past guess, this is a past circle
-  if (existingWords.some(word => word.includes(letter))) {
+  // If the letter is in a past guess, this is a past circle.
+  if (state.existingWords.some(word => word.includes(letter))) {
     classNames.push('past');
   }
 

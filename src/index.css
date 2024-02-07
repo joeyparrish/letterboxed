@@ -65,61 +65,62 @@ span.join {
   width: 100%;
 }
 
-#letter-box {
+.letter-box {
+  display: block;
   margin: auto;
   max-height: 70svh;
 }
 
-#letter-box path, #letter-box circle, #letter-box rect {
+.letter-box path, .letter-box circle, .letter-box rect {
   /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   stroke-width: 5px;
 }
 
-#letter-box rect {
+.letter-box rect {
   stroke: black;
 }
 
-#letter-box path {
+.letter-box path {
   stroke: black;
 }
 
-#letter-box path.active {
+.letter-box path.active {
   stroke: var(--background-color);
   stroke-dasharray: 4% 4%;
 }
 
 /* Underlay for each active path to make sure the white parts of the dashed
  * line are white and not transparent: */
-#letter-box path.active.under {
+.letter-box path.active.under {
   stroke: white;
   stroke-dasharray: none;
 }
 
-#letter-box path.past {
+.letter-box path.past {
   stroke: var(--past-color);
 }
 
-#letter-box circle {
+.letter-box circle {
   fill: white;
   stroke: black;
 }
 
-#letter-box circle.past {
+.letter-box circle.past {
   fill: var(--background-color);
   stroke: black;
 }
 
-#letter-box circle.active {
+.letter-box circle.active {
   fill: white;
   stroke: var(--background-color);
 }
 
-#letter-box circle.lead {
+.letter-box circle.lead {
   fill: black;
   stroke: var(--background-color);
 }
 
-#letter-box text {
+.letter-box text {
   /* Within context of an SVG, this is px in SVG space, not HTML doc space */
   font-size: 60px;
   text-anchor: middle;
@@ -127,11 +128,11 @@ span.join {
   fill: white;
 }
 
-#letter-box text.past, #letter-box text.active {
+.letter-box text.past, .letter-box text.active {
   fill: black;
 }
 
-#letter-box text.active {
+.letter-box text.active {
   font-weight: bold;
 }
 

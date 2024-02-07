@@ -1,12 +1,11 @@
-import { useGame } from './context';
-
-export default function Title() {
-  const [state, setState] = useGame();
-
+export default function Title({state}) {
   return (
     <div className="fill">
-      <h1 class={state.titleClass}>{state.title}</h1>
-      <h2><img class="authorImage" src={state.authorImage} /> {state.author}</h2>
+      <h1 className={state.puzzle.titleClass}>{state.puzzle.title}</h1>
+      <h2>
+        <img className="authorImage" src={state.puzzle.authorImage} />
+        {state.puzzle.author}
+      </h2>
     </div>
   );
 }

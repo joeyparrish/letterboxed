@@ -1,101 +1,98 @@
-import { useGame } from '../context';
 import { letterClasses } from './classes';
 
 const offset = 125;
 
-function Letter({ letter, x, y }) {
-  const [ state, setState ] = useGame();
-  const { currentGuess } = state;
-
-  function addLetter() {
-    setState({
-      currentGuess: currentGuess + letter,
-      intent: "guess"
-    });
-  }
-
+function Letter({ state, addLetter, letter, x, y }) {
   return (
     <text
-      onClick={addLetter}
+      onClick={() => addLetter(letter)}
       x={x}
       y={y}
-      className={letterClasses(letter, state)}>
+      className={letterClasses({letter, state})}>
       {letter}
     </text>
   )
 }
 
-function Set({ letters, placement}) {
-  if (!letters) {
-    // Not loaded yet.
-    return;
-  }
-
-  if(placement === "top") {
-    return letters.map((letter, i) => (
-        <Letter
-          key={i}
-          x={300 + (offset * (i - 1))}
-          y={75}
-          letter={letter} />
-      )
-    )
-  }
-
-  if(placement === "left") {
-    return (
-      <g>
-        {letters.map((letter, i) => (
+function Set({ letters, addLetter, state, placement}) {
+  switch (placement) {
+    case 'top':
+      return letters.map((letter, i) => (
           <Letter
-            key={i}
-            x={60}
-            y={320 + (offset * (i - 1))}
-            letter={letter} />
-        ))}
-      </g>
-    )
-  }
-
-  if(placement === "right") {
-    return (
-      <g>
-        {letters.map((letter, i) => (
-        <Letter
-          key={i}
-          x={540}
-          y={320 + (offset * (i - 1))}
-          letter={letter} />
-        ))}
-      </g>
-    )
-  }
-
-  if(placement === "bottom") {
-    return (
-      <g>
-        {letters.map((letter, i) => (
-          <Letter
+            addLetter={addLetter}
+            state={state}
             key={i}
             x={300 + (offset * (i - 1))}
-            y={565}
+            y={75}
             letter={letter} />
-        ))}
-      </g>
-    )
+        )
+      );
+
+    case 'left':
+      return (
+        <g>
+          {letters.map((letter, i) => (
+            <Letter
+              addLetter={addLetter}
+              state={state}
+              key={i}
+              x={60}
+              y={320 + (offset * (i - 1))}
+              letter={letter} />
+          ))}
+        </g>
+      );
+
+    case 'right':
+      return (
+        <g>
+          {letters.map((letter, i) => (
+          <Letter
+            addLetter={addLetter}
+            state={state}
+            key={i}
+            x={540}
+            y={320 + (offset * (i - 1))}
+            letter={letter} />
+          ))}
+        </g>
+      );
+
+    case 'bottom':
+      return (
+        <g>
+          {letters.map((letter, i) => (
+            <Letter
+              addLetter={addLetter}
+              state={state}
+              key={i}
+              x={300 + (offset * (i - 1))}
+              y={565}
+              letter={letter} />
+          ))}
+        </g>
+      );
   }
 
-  return null
+  return null;
 }
 
-export default function Letters() {
-  const [ state ] = useGame();
-  const { letters } = state;
+export default function Letters({state, addLetter}) {
+  if (!state.puzzle.letters?.length) {
+    // Not loaded yet.
+    return (<></>);
+  }
+
   return (
     <g>
-      <Set letters={letters[0]} placement="top"/>
-      <Set letters={letters[1]} placement="left"/>
-      <Set letters={letters[2]} placement="right"/>
-      <Set letters={letters[3]} placement="bottom"/>
+      <Set addLetter={addLetter} letters={state.puzzle.letters[0]}
+           state={state} placement="top" />
+      <Set addLetter={addLetter} letters={state.puzzle.letters[1]}
+           state={state} placement="left" />
+      <Set addLetter={addLetter} letters={state.puzzle.letters[2]}
+           state={state} placement="right" />
+      <Set addLetter={addLetter} letters={state.puzzle.letters[3]}
+           state={state} placement="bottom" />
     </g>
   )
 }

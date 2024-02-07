@@ -1,8 +1,4 @@
-import { useGame } from './context';
-
-export default function Won() {
-  const [state, setState] = useGame();
-
+export default function Won({state}) {
   return (
     <div className="fill">
       <h1>Congratulations!</h1>

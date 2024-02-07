@@ -1,36 +1,24 @@
-import { useGame } from '../context';
 import { letterClasses } from './classes';
 
-function Circle({ letter }) {
-  const [ state, setState ] = useGame();
-  const { letterMap, currentGuess } = state;
-  const [ x, y ] = letterMap[letter];
-
-  function addLetter() {
-    setState({
-      currentGuess: currentGuess + letter,
-      intent: "guess",
-    });
-  }
+function Circle({ letter, state, addLetter }) {
+  const [ x, y ] = state.puzzle.letterMap[letter];
 
   return (
     <circle
-      onClick={addLetter}
+      onClick={() => addLetter(letter)}
       cx={x}
       cy={y}
       r={12}
-      className={letterClasses(letter, state)}
+      className={letterClasses({letter, state})}
     />
   );
 }
 
-export default function Circles() {
-  const [ state ] = useGame();
-  const { letters } = state;
+export default function Circles({ state, addLetter }) {
   return (
     <g>
-      {letters.flat().map((letter, i) => (
-        <Circle letter={letter} key={i} />
+      {state.puzzle.letters.flat().map((letter, i) => (
+        <Circle letter={letter} addLetter={addLetter} state={state} key={i} />
       ))}
     </g>
   )

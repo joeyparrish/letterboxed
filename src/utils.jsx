@@ -55,7 +55,7 @@ export function uuid() {
 // Empty 1x1 SVG.
 const blankImage = "data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIC8+";
 
-const blankGameState = {
+const blankPuzzleState = {
   letters: [],
   letterMap: {},
   dictionary: new Set(),
@@ -67,11 +67,11 @@ const blankGameState = {
 function gameDataFailed(message) {
   return {
     hardError: message,
-    ...blankGameState,
+    puzzle: blankPuzzleState,
   };
 }
 
-function generateMap(letterList) {
+function generateLetterMap(letterList) {
   const map = {};
   letterList.forEach((row, i) => {
     row.forEach((letter, j) => {
@@ -116,13 +116,15 @@ export async function loadStandardGameData(date) {
 
   return {
     hardError: '',  // Clear any previous errors.
-    letters,
-    letterMap: generateMap(letters),
-    dictionary: new Set(gameData.dictionary),
-    title: gameData.date,
-    titleClass: "standard",
-    author: gameData.editor,
-    authorImage: gameData.editorImage,
+    puzzle: {
+      letters,
+      letterMap: generateLetterMap(letters),
+      dictionary: new Set(gameData.dictionary),
+      title: gameData.date,
+      titleClass: "standard",
+      author: gameData.editor,
+      authorImage: gameData.editorImage,
+    },
   };
 }
 
@@ -175,12 +177,14 @@ export async function loadPoetryGameData() {
   const letters = puzzle.sides.map((side) => side.split(''));
   return {
     hardError: '',  // Clear any previous errors.
-    letters,
-    letterMap: generateMap(letters),
-    dictionary: new Set(dictionary),
-    title: puzzle.source,
-    titleClass: "poetry",
-    author: gameData.editor,
-    authorImage: gameData.editorImage,
+    puzzle: {
+      letters,
+      letterMap: generateLetterMap(letters),
+      dictionary: new Set(dictionary),
+      title: puzzle.source,
+      titleClass: "poetry",
+      author: gameData.editor,
+      authorImage: gameData.editorImage,
+    },
   };
 }

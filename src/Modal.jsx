@@ -1,22 +1,12 @@
-import { useGame } from './context';
-
-export default function Modal({ id, stateName, children }) {
-  const [ state, setState ] = useGame();
-
-  const closeModal = () => {
-    const closeState = {};
-    closeState[stateName] = false;
-    setState(closeState);
-  };
-
-  const className = state[stateName] ? 'modal open' : 'modal';
-  if (state[stateName]) {
+export default function Modal({ id, open, onClose, children }) {
+  const className = open ? 'modal open' : 'modal';
+  if (open) {
     document.activeElement.blur();
   }
 
   return (
     <div id={id} className={className}>
-      <button className="closeButton" onClick={closeModal}>&times;</button>
+      <button className="closeButton" onClick={onClose}>&times;</button>
       { children }
     </div>
   );
