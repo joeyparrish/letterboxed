@@ -49,6 +49,7 @@ button {
 .authorImage {
   height: 2em;
   vertical-align: middle;
+  margin: 0 1em;
 }
 
 .guesses {
