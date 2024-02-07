@@ -15,19 +15,19 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 const router = createHashRouter([
   {
     path: "",
-    element: <Game />,
+    element: <Game key="latest" />,
     loader: gameDataLoaderFactory('standard'),
     errorElement: <ErrorPage />,
   },
   {
     path: "standard/:date",
     loader: gameDataLoaderFactory('standard'),
-    element: <Game />,
+    element: <Game key="old" />,
   },
   {
     path: "poetry",
     loader: gameDataLoaderFactory('poetry'),
-    element: <Game />,
+    element: <Game key="poetry" />,
   },
   {
     path: "archive",
