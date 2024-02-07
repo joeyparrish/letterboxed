@@ -5,6 +5,7 @@ import Help from "./Help";
 import Modal from "./Modal";
 import Title from "./Title";
 import Won from "./Won";
+import Yesterday from "./Yesterday";
 
 import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
@@ -40,10 +41,21 @@ const defaultGameState = {
     authorImage: "",
   },
 
+  yesterdayPuzzle: {
+    // list of sides, each of which is a list of letters
+    letters: [],
+    // generated location map of the letters
+    letterMap: {},
+    // official solution to this puzzle
+    ourSolution: [],
+  },
+
   // won game, winning modal shown
   won: false,
   // help modal shown
   help: false,
+  // yesterday modal shown
+  yesterday: false,
 };
 
 function checkForErrors(change, state) {
@@ -174,9 +186,14 @@ export default function Game() {
   }
 
   function help() {
-    console.log('help');
     setState({
       help: true,
+    });
+  }
+
+  function yesterday() {
+    setState({
+      yesterday: true,
     });
   }
 
@@ -184,6 +201,7 @@ export default function Game() {
     setState({
       help: false,
       won: false,
+      yesterday: false,
     });
   }
 
@@ -238,8 +256,9 @@ export default function Game() {
 
         <div className="column fill">
           <Box state={state} addLetter={addLetter} />
-          <Buttons restart={restart} submit={submit}
-                   deleteLetter={deleteLetter} help={help} />
+          <Buttons state={state}
+                   restart={restart} submit={submit} deleteLetter={deleteLetter}
+                   help={help} yesterday={yesterday} />
         </div>
 
         <Modal id="helpModal" open={state.help} onClose={closeModals}>
@@ -248,6 +267,10 @@ export default function Game() {
 
         <Modal id="wonModal" open={state.won} onClose={closeModals}>
           <Won state={state} />
+        </Modal>
+
+        <Modal id="yesterdayModal" open={state.yesterday} onClose={closeModals}>
+          <Yesterday state={state} />
         </Modal>
       </div>
     </div>

@@ -68,6 +68,7 @@ function gameDataFailed(message) {
   return {
     hardError: message,
     puzzle: blankPuzzleState,
+    yesterdayPuzzle: blankPuzzleState,
   };
 }
 
@@ -80,6 +81,16 @@ function generateLetterMap(letterList) {
     });
   });
   return map;
+}
+
+function NYTSidesToLetters(sides) {
+  // Reorder the NYT "sides" metadata into the order and format expected here.
+  return [
+    sides[0].split(''),
+    sides[3].split(''),
+    sides[1].split(''),
+    sides[2].split(''),
+  ];
 }
 
 export async function loadStandardGameData(date) {
@@ -106,13 +117,8 @@ export async function loadStandardGameData(date) {
     return gameDataFailed(`Failed to parse game data for ${date}!`);
   }
 
-  // Reorder the NYT sides into the order expected here.
-  const letters = [
-    gameData.sides[0].split(''),
-    gameData.sides[3].split(''),
-    gameData.sides[1].split(''),
-    gameData.sides[2].split(''),
-  ];
+  const letters = NYTSidesToLetters(gameData.sides);
+  const yesterdaysLetters = NYTSidesToLetters(gameData.yesterdaysSides);
 
   return {
     hardError: '',  // Clear any previous errors.
@@ -124,6 +130,11 @@ export async function loadStandardGameData(date) {
       titleClass: "standard",
       author: gameData.editor,
       authorImage: gameData.editorImage,
+    },
+    yesterdayPuzzle: {
+      ourSolution: gameData.yesterdaysSolution,
+      letters: yesterdaysLetters,
+      letterMap: generateLetterMap(yesterdaysLetters),
     },
   };
 }
