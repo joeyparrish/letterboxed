@@ -186,11 +186,14 @@ span.join {
 }
 
 .modal h1 {
+  margin: 0 10% 1em 10%;
+  text-align: center;
   font-size: 8svmin;
-  margin: 1em 0;
 }
 
 .modal h2 {
+  margin: 1em 10%;
+  text-align: center;
   font-size: 4svmin;
 }
 
@@ -262,10 +265,6 @@ span.join {
 #wonModal {
   padding: 2em;
   top: 9em;
-}
-
-#wonModal h1 {
-  text-align: center;
 }
 
 #wonModal p {
@@ -378,11 +377,6 @@ span.join {
 
 #menu a:hover, #archive a:hover {
   color: dimgray;
-}
-
-#yesterdayModal h1, #yesterdayModal h2 {
-  margin: 1em 10%;
-  text-align: center;
 }
 
 @media only screen and (orientation: landscape) and (max-height: 500px) {

@@ -5,7 +5,7 @@ export default function Help() {
     <div className="fill">
       <h1>How To Play</h1>
 
-      <p>Create words using letters around the square</p>
+      <h2>Create words using letters around the square</h2>
 
       <img id="example-game" src={reference} alt="example game" />
 
