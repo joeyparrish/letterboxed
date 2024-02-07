@@ -183,6 +183,11 @@ span.join {
 
 .modal h1 {
   font-size: 8svmin;
+  margin: 1em 0;
+}
+
+.modal h2 {
+  font-size: 4svmin;
 }
 
 #buttonRow {
