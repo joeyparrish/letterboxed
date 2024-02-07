@@ -26,6 +26,10 @@ h2 {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 #container {
   padding: 3.5em;
   padding-bottom: 1em;
@@ -103,6 +107,7 @@ span.join {
 .letter-box circle {
   fill: white;
   stroke: black;
+  cursor: pointer;
 }
 
 .letter-box circle.past {
