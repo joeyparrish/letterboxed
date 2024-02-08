@@ -251,7 +251,7 @@ export default function Game() {
 
       <div id="gameContainer">
         <div className="column fill">
-          <Input state={state} />
+          <Input state={state} onErrorAnimationEnd={onErrorAnimationEnd} />
         </div>
 
         <div className="column fill">
