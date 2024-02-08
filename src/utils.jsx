@@ -118,7 +118,7 @@ export async function loadStandardGameData(date) {
   }
 
   const letters = NYTSidesToLetters(gameData.sides);
-  const yesterdaysLetters = NYTSidesToLetters(gameData.yesterdaysSides);
+  const yesterdayLetters = NYTSidesToLetters(gameData.yesterdaysSides);
 
   return {
     hardError: '',  // Clear any previous errors.
@@ -133,8 +133,8 @@ export async function loadStandardGameData(date) {
     },
     yesterdayPuzzle: {
       ourSolution: gameData.yesterdaysSolution,
-      letters: yesterdaysLetters,
-      letterMap: generateLetterMap(yesterdaysLetters),
+      letters: yesterdayLetters,
+      letterMap: generateLetterMap(yesterdayLetters),
     },
   };
 }
@@ -184,8 +184,12 @@ export async function loadPoetryGameData() {
   // Which puzzle to load?
   const puzzleIndex = dateIndex % gameData.puzzles.length;
   const puzzle = gameData.puzzles[puzzleIndex];
+  const yesterdayPuzzle =
+      gameData.puzzles[(dateIndex - 1) % gameData.puzzles.length];
 
   const letters = puzzle.sides.map((side) => side.split(''));
+  const yesterdayLetters = yesterdayPuzzle.sides.map((side) => side.split(''));
+
   return {
     hardError: '',  // Clear any previous errors.
     puzzle: {
@@ -196,6 +200,11 @@ export async function loadPoetryGameData() {
       titleClass: "poetry",
       author: gameData.editor,
       authorImage: gameData.editorImage,
+    },
+    yesterdayPuzzle: {
+      ourSolution: yesterdayPuzzle.ourSolution,
+      letters: yesterdayLetters,
+      letterMap: generateLetterMap(yesterdayLetters),
     },
   };
 }
