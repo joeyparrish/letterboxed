@@ -72,7 +72,7 @@ function gameDataFailed(message) {
   };
 }
 
-function generateLetterMap(letterList) {
+export function generateLetterMap(letterList) {
   const map = {};
   letterList.forEach((row, i) => {
     row.forEach((letter, j) => {

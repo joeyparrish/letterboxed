@@ -1,5 +1,4 @@
 import Box from './Box';
-import reference from './assets/reference.svg';
 
 export default function Yesterday({state}) {
   const yesterdayState = {
@@ -7,7 +6,6 @@ export default function Yesterday({state}) {
     puzzle: state.yesterdayPuzzle,
     existingWords: state.yesterdayPuzzle.ourSolution,
   };
-  console.log({state, yesterdayState});
 
   return (
     <div className="fill">

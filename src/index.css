@@ -381,6 +381,20 @@ span.join {
   color: dimgray;
 }
 
+#resultsModal .counts {
+  text-align: center;
+}
+
+#resultsModal summary {
+  margin: 1em 0;
+}
+
+#shareButton {
+  display: block;
+  margin: auto;
+  margin-top: 2em;
+}
+
 @media only screen and (orientation: landscape) and (max-height: 500px) {
   #small-screen-error {
     display: block;

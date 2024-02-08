@@ -7,6 +7,7 @@ import Game, { gameDataLoaderFactory } from "./Game";
 import Help from "./Help";
 import Menu from "./Menu";
 import Modal from "./Modal";
+import Results, { resultsLoader } from "./Results";
 import Title from "./Title";
 import Won from "./Won";
 import Yesterday from "./Yesterday";
@@ -32,6 +33,11 @@ const router = createHashRouter([
   {
     path: "archive",
     element: <Archive />,
+  },
+  {
+    path: "results/:details",
+    loader: resultsLoader,
+    element: <Results />,
   },
 ]);
 
