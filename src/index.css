@@ -162,7 +162,7 @@ span.join {
   position: absolute;
   top: 0;
   background: var(--modal-color);
-  padding: 1em;
+  padding: 2em;
   margin: 0.5em;
   border: var(--modal-border) 0.1em solid;
   border-radius: 0.5em;
@@ -187,13 +187,15 @@ span.join {
 }
 
 .modal h1 {
-  margin: 0 10% 1em 10%;
+  margin: 0;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 8svmin;
 }
 
 .modal h2 {
-  margin: 1em 10%;
+  margin: 0;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 4svmin;
 }
@@ -264,7 +266,6 @@ span.join {
 }
 
 #wonModal {
-  padding: 2em;
   top: 9em;
 }
 
