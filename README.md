@@ -7,6 +7,7 @@ Improvements over the original:
   - Cached, offline version using a Service Worker
   - Archive of past puzzles
   - Puzzles generated from large corpora of English poetry
+  - Share button
 
 Missing:
   - Clear license (forked from a repo without a license, clarification sought; https://github.com/joeyparrish/letterboxed/issues/1)
