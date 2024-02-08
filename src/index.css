@@ -167,6 +167,8 @@ span.join {
   border: var(--modal-border) 0.1em solid;
   border-radius: 0.5em;
   display: none;
+
+  z-index: 2; /* On top of all game features and menu */
 }
 
 .modal.open {
@@ -345,6 +347,8 @@ span.join {
   left: -15em;
   transition: left 0.5s ease-in;
   overflow: hidden;
+
+  z-index: 1; /* On top of all game features */
 }
 
 #menu.open {
