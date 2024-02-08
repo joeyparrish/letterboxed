@@ -25,7 +25,11 @@ export default function Won({state}) {
     const numWords = solution.length;
     const numRepeatedLetters = countRepeatedLetters(solution);
 
-    const resultsText = `I solved Letterboxed from ${state.puzzle.title}` +
+    // We say "from {title}", so if the title starts with "from" (as in the
+    // poetry puzzles), drop it here.
+    const title = state.puzzle.title.replace(/^from /, '');
+
+    const resultsText = `I solved Letterboxed from ${title}` +
                         ` in ${numWords} words with` +
                         ` ${numRepeatedLetters} repeated letters!`;
 
