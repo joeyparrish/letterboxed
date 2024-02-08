@@ -364,6 +364,10 @@ span.join {
 
   cursor: pointer;
   user-select: none;
+
+  /* Make the button text bigger and wider. */
+  font-size: 5svmin;
+  transform: scale(1.5, 1);
 }
 
 #menuItems {
