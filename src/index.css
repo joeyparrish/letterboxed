@@ -158,6 +158,15 @@ span.join {
   height: 1.5em;
 }
 
+.modalScrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(black, transparent 10%, transparent 20%, black);
+}
+
 .modal {
   position: absolute;
   top: 0;
@@ -166,13 +175,9 @@ span.join {
   margin: 0.5em;
   border: var(--modal-border) 0.1em solid;
   border-radius: 0.5em;
-  display: none;
+  display: block;
 
   z-index: 2; /* On top of all game features and menu */
-}
-
-.modal.open {
-  display: block;
 }
 
 .modal * {
