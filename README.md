@@ -1,4 +1,4 @@
-A very basic recreation of the [New York Times' Letter Boxed Game](https://www.nytimes.com/puzzles/letter-boxed)
+A recreation of the [New York Times' Letter Boxed Game](https://www.nytimes.com/puzzles/letter-boxed)
 
 ![](src/assets/reference.png)
 
@@ -10,5 +10,5 @@ Improvements over the original:
   - Share button
 
 Missing:
-  - Clear license (forked from a repo without a license, clarification sought; https://github.com/joeyparrish/letterboxed/issues/1)
   - Animations (https://github.com/joeyparrish/letterboxed/issues/2)
+  - Interface to create custom puzzles (https://github.com/joeyparrish/letterboxed/issues/3)
