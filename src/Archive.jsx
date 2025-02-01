@@ -17,9 +17,22 @@
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import archiveDates from '../public/puzzle-sources/standard/archive.json';
+import { useEffect, useState } from 'react';
+
+import { loadStandardGameArchive } from './utils';
 
 function PuzzleList() {
+  const [archiveDates, setArchiveDates] = useState([]);
+
+  async function fetchArchive() {
+    const data = await loadStandardGameArchive();
+    setArchiveDates(data);
+  }
+
+  useEffect(() => {
+    fetchArchive();
+  }, []);
+
   const list = [];
   for (const date of archiveDates) {
     const dateLink = `#standard/${date}`;

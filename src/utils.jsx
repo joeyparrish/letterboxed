@@ -17,8 +17,6 @@
  * this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import archiveDates from '../public/puzzle-sources/standard/archive.json';
-
 const circleCoordinates = [
   // top
   [175, 100],
@@ -112,9 +110,33 @@ function NYTSidesToLetters(sides) {
   ];
 }
 
+export async function loadStandardGameArchive() {
+  const response = await fetch('puzzle-sources/standard/archive.json');
+  if (!response.ok) {
+    console.error('Request for game data archive failed!',
+                  response.status, response.statusText);
+
+    return gameDataFailed('Failed to load game data archive!');
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return gameDataFailed('Failed to parse game data archive!');
+  }
+}
+
 export async function loadStandardGameData(date) {
   // Default to the most recent date.
-  date = date || archiveDates[archiveDates.length - 1];
+  if (!date) {
+    const archiveDates = await loadStandardGameArchive();
+    if (archiveDates.hardError) {
+      // An error object, just bail.
+      return archiveDates;
+    }
+    date = archiveDates[archiveDates.length - 1];
+  }
 
   // Normalize to a Date object so we know we're not being fed nonsense.
   date = new Date(date);
