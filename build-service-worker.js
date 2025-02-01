@@ -24,7 +24,15 @@
     globDirectory: 'dist/',
     globPatterns: [
       '!(*.map)',
-      'puzzle-sources/**/*',
+      // Everything but archive.json, which needs an explicit network-first strategy.
+      'puzzle-sources/*',
+      'puzzle-sources/standard/2*.json',
+    ],
+    runtimeCaching: [
+      {
+        urlPattern: ({url}) => url.pathname.endsWith('archive.json'),
+        handler: 'NetworkFirst',
+      },
     ],
     skipWaiting: true,
     swDest: 'dist/service-worker.js',
