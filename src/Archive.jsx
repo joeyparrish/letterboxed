@@ -26,6 +26,7 @@ function PuzzleList() {
 
   async function fetchArchive() {
     const data = await loadStandardGameArchive();
+    data.reverse();  // newest first
     setArchiveDates(data);
   }
 
